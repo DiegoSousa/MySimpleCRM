@@ -21,11 +21,11 @@ since the framework is implemented JPA (Java Persistence API)<br />
 
 <h1>Configuring the Database:
 
-1 - <b>Install PostgreSQL<b> (http://www.postgresql.org/download/)
+1 - <b>Install PostgreSQL<b> (http://www.postgresql.org/download/).
 
-1.1 - If you think necessary, you can install the customer PostgreSQL (http://www.pgadmin.org/download/)
+1.1 - If you think necessary, you can install the customer PostgreSQL (http://www.pgadmin.org/download/).
 
-1.2 - Create a database with the name "messengerConcurrent" and set the "Login Role" default PostgreSQL, which contains login and password 'postgres'
+1.2 - Create a database with the name "messengerConcurrent" and set the "Login Role" default PostgreSQL, which contains login and password 'postgres'.
 
 <h1>Configuring the Eclipse:
  
@@ -35,7 +35,7 @@ since the framework is implemented JPA (Java Persistence API)<br />
 
 <b>3 To install Maven:<b>
 
-3.1 Help -> Eclipse MarketPlace -> install the "Maven Integration for eclipse WTP"
+3.1 Help -> Eclipse MarketPlace -> install the "Maven Integration for eclipse WTP".
 
 <b>4 - If you do not have the JUnit 4:<b>
 
@@ -55,13 +55,15 @@ since the framework is implemented JPA (Java Persistence API)<br />
 
 The End!
 
-<h1>To run the tests follow exactly the following steps:
+<h1>Configuring the project:
 
-1 - Go MessengerConcurrent -> Properties -> Add Library -> JUnit -> Next -> In Junit Library Version type Version4 -> Finish
+1 - Go MessengerConcurrent -> Properties -> Java Build Path -> Libraries -> Add Library -> JUnit -> Next -> In Junit Library Version type Version4 -> Finish.
 
-2 - Still in Properties go on the "Source" -> Add Folder -> threadControl_0.3_src -> check the option srcAspectsTC and srcTC
+2 - Still in Properties go on the "Source" -> Add Folder -> threadControl_0.3_src -> check the option srcAspectsTC and srcTC.
 
-3 - Go Again in MessengerConcurrent -> Configure -> Convert to AspectJ Project
+3 - Still in Properties locate "Project Facets" -> check the options (java - version 1.6+) and (Dynamic Web Module - version 3.0+) -> OK. 
+
+4 - Go Again in MessengerConcurrent -> Configure -> Convert to AspectJ Project.
 
 <b>The End!<b>
 
@@ -84,11 +86,11 @@ já que está implementado o framework JPA (Java Persistence API)<br />
  
 <h1>Configurar o Banco de dados:
 
-1 - <b>Instalar o PostgreSQL<b> (http://www.postgresql.org/download/)
+1 - <b>Instalar o PostgreSQL<b> (http://www.postgresql.org/download/).
 
-2 - Caso ache necessario, poderá instalar o cliente PostgreSQL (http://www.pgadmin.org/download/)
+2 - Caso ache necessario, poderá instalar o cliente PostgreSQL (http://www.pgadmin.org/download/).
 
-3 - Criar uma base de dados com o nome messengerConcurrent e setar para a base o "Login Role" default do PostgreSQL, que contém login e senha 'postgres'
+3 - Criar uma base de dados com o nome messengerConcurrent e setar para a base o "Login Role" default do PostgreSQL, que contém login e senha 'postgres'.
 
 <h1>Configurar o eclipse:
   
@@ -98,11 +100,11 @@ já que está implementado o framework JPA (Java Persistence API)<br />
 
 <b>2 - Para instalar o Maven:<b>
 
-2.2 - Help -> Eclipse MarketPlace -> instale o "Maven Integration for eclipse WTP"
+2.2 - Help -> Eclipse MarketPlace -> instale o "Maven Integration for eclipse WTP".
 
 <b>3 - Caso não tenha o JUnit 4:
 
-3.1 - acesse http://www.junit.org/  faça o download do jar e adicione em /eclipse/plugins.
+3.1 - Acesse http://www.junit.org/  faça o download do jar e adicione em /eclipse/plugins.
 
 <b>Vamos ao que interessa!<b>
 
@@ -118,13 +120,15 @@ já que está implementado o framework JPA (Java Persistence API)<br />
 
 Fim!
 
-<h1>Para rodar os testes siga exatamento os seguintes passos:
+<h1>Configurando o projeto:
 
-1 - Vá em MessengerConcurrent -> Properties -> Add Library -> JUnit -> Next -> Em Junit Library Version digite version4 -> Finish
+1 - Vá em MessengerConcurrent -> Properties -> Procure por Java Buid Path -> na aba libraries -> Add Library -> JUnit -> Next -> Em Junit Library Version digite version4 -> Finish.
 
-2 - Ainda em Properties vá na aba "Source"  -> Add Folder -> threadControl_0.3_src -> Marque a opção srcAspectsTC e srcTC
+2 - Ainda em Properties vá na aba "Source" -> Add Folder -> threadControl_0.3_src -> Marque a opção srcAspectsTC e srcTC.
 
-3 - Vá Novamente em MessengerConcurrent - > Configure -> Convert to AspectJ Project
+3 - Ainda em Properties "Project Facets" -> marque as opções (java - version 1.6+) e (Dynamic Web Module - version 3.0+) -> OK.
+
+4 - Vá Novamente em MessengerConcurrent -> Configure -> Convert to AspectJ Project.
 
 
 <b>Fim!<b>
