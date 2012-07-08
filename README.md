@@ -122,11 +122,11 @@ Fim!
 
 <h1>Configurando o projeto:
 
-1 - Vá em MessengerConcurrent -> Properties -> Procure por Java Buid Path -> na aba libraries -> Add Library -> JUnit -> Next -> Em Junit Library Version digite version4 -> Finish.
+1 - Vá em MessengerConcurrent -> Properties -> Procure por Java Buid Path -> na aba Libraries -> Add Library -> JUnit -> Next -> Em Junit Library Version digite version4 -> Finish.
 
 2 - Ainda em Properties vá na aba "Source" -> Add Folder -> threadControl_0.3_src -> Marque a opção srcAspectsTC e srcTC.
 
-3 - Ainda em Properties "Project Facets" -> marque as opções (java - version 1.6+) e (Dynamic Web Module - version 3.0+) -> OK.
+3 - Ainda em Properties localize "Project Facets" -> marque as opções (java - version 1.6+) e (Dynamic Web Module - version 3.0+) -> OK.
 
 4 - Vá Novamente em MessengerConcurrent -> Configure -> Convert to AspectJ Project.
 
