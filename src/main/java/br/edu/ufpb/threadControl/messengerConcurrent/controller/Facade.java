@@ -43,7 +43,7 @@ import br.edu.ufpb.threadControl.messengerConcurrent.runnable.RunnableSearchProm
 import br.edu.ufpb.threadControl.messengerConcurrent.runnable.RunnableSearchPromotionByProduct;
 
 /**
- * Facade
+ * Facade 
  * 
  * @author Diego Sousa - www.diegosousa.com
  * @version 2.0 Copyright (C) 2012 Diego Sousa de Azevedo.

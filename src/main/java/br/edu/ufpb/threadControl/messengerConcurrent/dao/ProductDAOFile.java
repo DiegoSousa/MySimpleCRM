@@ -11,7 +11,7 @@ import br.edu.ufpb.threadControl.messengerConcurrent.manager.IProductManager;
  * @author Diego Sousa - www.diegosousa.com
  * @version 2.0 Copyright (C) 2012 Diego Sousa de Azevedo
  */
-public class ProductDAOList implements IProductManager {
+public class ProductDAOFile implements IProductManager {
 
 	@Override
 	public Product addProduct(Product product) {

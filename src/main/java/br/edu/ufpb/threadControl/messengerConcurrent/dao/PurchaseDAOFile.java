@@ -13,7 +13,7 @@ import br.edu.ufpb.threadControl.messengerConcurrent.manager.IPurchaseManager;
  * @author Diego Sousa - www.diegosousa.com
  * @version 2.0 Copyright (C) 2012 Diego Sousa de Azevedo
  */
-public class PurchaseDAOList implements IPurchaseManager {
+public class PurchaseDAOFile implements IPurchaseManager {
 
 	@Override
 	public Purchase addPurchase(Purchase purchase) {

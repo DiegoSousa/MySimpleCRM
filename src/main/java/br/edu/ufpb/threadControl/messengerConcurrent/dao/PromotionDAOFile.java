@@ -13,7 +13,7 @@ import br.edu.ufpb.threadControl.messengerConcurrent.manager.IPromotionManager;
  * @version 2.0 Copyright (C) 2012 Diego Sousa de Azevedo
  */
 
-public class PromotionDAOList implements IPromotionManager {
+public class PromotionDAOFile implements IPromotionManager {
 
 	@Override
 	public Promotion addPromotion(Promotion promotion) {

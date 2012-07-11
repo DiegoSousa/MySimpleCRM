@@ -4,14 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-
-import javax.persistence.EntityManager;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -25,11 +24,12 @@ import br.edu.ufcg.threadcontrol.ThreadConfiguration;
 import br.edu.ufcg.threadcontrol.ThreadControl;
 import br.edu.ufcg.threadcontrol.ThreadState;
 import br.edu.ufpb.threadControl.messengerConcurrent.controller.Facade;
+import br.edu.ufpb.threadControl.messengerConcurrent.dao.CustomerDAOFile;
 import br.edu.ufpb.threadControl.messengerConcurrent.entity.Customer;
 import br.edu.ufpb.threadControl.messengerConcurrent.entity.Product;
 import br.edu.ufpb.threadControl.messengerConcurrent.entity.Promotion;
 import br.edu.ufpb.threadControl.messengerConcurrent.entity.Purchase;
-import br.edu.ufpb.threadControl.messengerConcurrent.managerFactory.ManagerDAOFactoryJPA;
+import br.edu.ufpb.threadControl.messengerConcurrent.managerFactory.ManagerDAOFactoryFile;
 import br.edu.ufpb.threadControl.messengerConcurrent.runnable.RunnableAddCustomer;
 import br.edu.ufpb.threadControl.messengerConcurrent.runnable.RunnableAddProduct;
 import br.edu.ufpb.threadControl.messengerConcurrent.runnable.RunnableAddPromotion;
@@ -58,49 +58,37 @@ import br.edu.ufpb.threadControl.messengerConcurrent.runnable.RunnableSearchProm
 import br.edu.ufpb.threadControl.messengerConcurrent.runnable.RunnableSearchPromotionByProduct;
 import br.edu.ufpb.threadControl.messengerConcurrent.runnable.RunnableSearchPurchaseByProduct;
 import br.edu.ufpb.threadControl.messengerConcurrent.runnable.RunnableSearchPurchasesOfACustomer;
-import br.edu.ufpb.threadControl.messengerConcurrent.util.HibernateUtil;
 
 /**
- * Class used to test the facade, which contains all the application methods.
- * Note: This class uses the framework JPA / Hibernate for persistence.
+ * Class used to test the facade with persistence in File , which contains all
+ * the application methods.
  * 
  * @author Diego Sousa - www.diegosousa.com
  * @version 2.0 Copyright (C) 2012 Diego Sousa de Azevedo
  */
 
-public class FacadeTest {
+public class FacadeTestFile {
 
 	private static Facade facade;
 	private ThreadControl threadControl;
-	private static EntityManager entityManager;
+	private File file;
 
 	public BlockingQueue<List<Customer>> copyListOfAllCustomer;
 	public BlockingQueue<List<Product>> copyListOfAllProduct;
 	public BlockingQueue<List<Promotion>> copyListOfAllPromotion;
 	public BlockingQueue<List<Purchase>> copyListOfAllPurchase;
 
-	// public BlockingQueue<Map<Customer, List<Product>>>
-	// copyAllClientsPreferences;
-	// public BlockingQueue<Map<Customer, List<Product>>>
-	// copyHistoricalOfProductsPurchasedOfAllCustomers;
-
 	public BlockingQueue<Customer> takerClientList;
 	public BlockingQueue<Product> takerProductList;
 	public BlockingQueue<Promotion> takerPromotionList;
 	public BlockingQueue<Purchase> takerPurchaseList;
-
-	// public BlockingQueue<List<Product>> takerProductPreferredClient;
-	// public BlockingQueue<List<Product>>
-	// takerHistoricalOfProductsPurchasedOfCustomers;
-	// public ThreadControl threadControl;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		entityManager = HibernateUtil.getInstance().getFactory()
-				.createEntityManager();
+
 		System.out.println("Starting the test facade class...");
 	}
 
@@ -121,44 +109,26 @@ public class FacadeTest {
 		/**
 		 * Erases data at the end of each test
 		 */
-		entityManager.getTransaction().begin();
-		entityManager.createNativeQuery("delete from purchased_promotions;")
-				.executeUpdate();
-		entityManager.createNativeQuery("delete from purchased_products;")
-				.executeUpdate();
-		entityManager.createNativeQuery("delete from purchases;")
-				.executeUpdate();
-		entityManager.createNativeQuery("delete from products_in_promotion;")
-				.executeUpdate();
-		entityManager.createNativeQuery("delete from promotions;")
-				.executeUpdate();
-		entityManager.createNativeQuery("delete from products;")
-				.executeUpdate();
-		entityManager.createNativeQuery("delete from customers;")
-				.executeUpdate();
-		entityManager.getTransaction().commit();
+
+		file = new File(CustomerDAOFile.getPath());
+		if (file.exists()) {
+			file.delete();
+		}
 
 		/*---------------------------------------------------------------------------------*/
 
-		facade = Facade.getInstance(new ManagerDAOFactoryJPA());
+		facade = Facade.getInstance(new ManagerDAOFactoryFile());
 		threadControl = new ThreadControl();
 		copyListOfAllCustomer = new LinkedBlockingQueue<List<Customer>>();
 		copyListOfAllProduct = new LinkedBlockingQueue<List<Product>>();
 		copyListOfAllPromotion = new LinkedBlockingQueue<List<Promotion>>();
 		copyListOfAllPurchase = new LinkedBlockingQueue<List<Purchase>>();
-		// copyAllClientsPreferences = new LinkedBlockingQueue<Map<Customer,
-		// List<Product>>>();
-		// copyHistoricalOfProductsPurchasedOfAllCustomers = new
-		// LinkedBlockingQueue<Map<Customer, List<Product>>>();
-		//
+
 		takerClientList = new LinkedBlockingQueue<Customer>();
 		takerProductList = new LinkedBlockingQueue<Product>();
 		takerPromotionList = new LinkedBlockingQueue<Promotion>();
 		takerPurchaseList = new LinkedBlockingQueue<Purchase>();
-		// takerProductPreferredClient = new
-		// LinkedBlockingQueue<List<Product>>();
-		// takerHistoricalOfProductsPurchasedOfCustomers = new
-		// LinkedBlockingQueue<List<Product>>();
+
 	}
 
 	/**
@@ -180,7 +150,6 @@ public class FacadeTest {
 		Customer customerAuxOne = null;
 		Customer customerAuxTwo = null;
 		Customer customerAuxThree = null;
-
 		Customer customer1 = new Customer("Diego", "111", "3422-1048",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
 		Customer customer2 = new Customer("Ayla", "222", "3422-1049",
@@ -3414,9 +3383,9 @@ public class FacadeTest {
 		threadControl.proceed();
 
 	}
-	
+
 	@Test
-	public void testGetListPurchase() {		
+	public void testGetListPurchase() {
 
 		List<Customer> currentObjectsListCustomer = null;
 		Customer customerAuxOne = null;
@@ -3687,7 +3656,7 @@ public class FacadeTest {
 
 		assertEquals(customerAuxOne, purchaseAux.getCustomer());
 		threadControl.proceed();
-		
+
 	}
 
 	// -------SystemConfiguration Generic--------
