@@ -37,7 +37,7 @@ public class ProductService {
 
 	@POST
 	@Path("/addproduct")
-	@Consumes(MediaType.APPLICATION_JSON)	
+	@Consumes(MediaType.APPLICATION_JSON)
 	public void addProduct(Product product) {
 		facade.addProduct(product);
 	}
@@ -50,12 +50,19 @@ public class ProductService {
 	}
 
 	@PUT
+	@Path("/restoreproduct")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void restoreProduct(String nameProduct) {
+		facade.restoreProduct(nameProduct);
+	}
+
+	@PUT
 	@Path("/editproduct")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void editProduct(Product product) {
 		facade.editProduct(product);
 	}
-	
+
 	@GET
 	@Path("/searchproductbyid")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -76,7 +83,6 @@ public class ProductService {
 		return productAux;
 	}
 
-
 	@GET
 	@Path("/searchproductbyname")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -86,7 +92,8 @@ public class ProductService {
 
 		try {
 			JSONObject jsonObject = new JSONObject(name);
-			facade.searchProductByName(jsonObject.getString("name"), listproduct);
+			facade.searchProductByName(jsonObject.getString("name"),
+					listproduct);
 			productAux = listproduct.take();
 		} catch (JSONException je) {
 			je.printStackTrace();
@@ -97,12 +104,11 @@ public class ProductService {
 		return productAux;
 	}
 
-	
 	@GET
 	@Path("/getlistofproduct")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Product> getListProducts() {
-		BlockingQueue<List<Product>> listproduct = new LinkedBlockingQueue<List<Product>>();		
+		BlockingQueue<List<Product>> listproduct = new LinkedBlockingQueue<List<Product>>();
 
 		facade.getListOfProduct(listproduct);
 

@@ -50,30 +50,17 @@ public class CustomerService {
 	}
 
 	@PUT
+	@Path("/restoreCustomer")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void restoreCustomer(String cpf) {
+		facade.restoreCustomer(cpf);
+	}
+
+	@PUT
 	@Path("/editcustomer")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void editCustomer(Customer customer) {
 		facade.editCustomer(customer);
-	}
-
-	@GET
-	@Path("/searchcustomerbylogin")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Customer searchcustomerbylogin(String login) {
-		BlockingQueue<Customer> listCustomer = new LinkedBlockingQueue<Customer>();
-		Customer customerAux = null;
-
-		try {
-			JSONObject jsonObject = new JSONObject(login);
-			facade.searchCustomerByLogin(jsonObject.getString("login"), listCustomer);
-			customerAux = listCustomer.take();
-		} catch (JSONException je) {
-			je.printStackTrace(); 
-		} catch (InterruptedException ie) {
-			ie.printStackTrace();
-		}
-
-		return customerAux;
 	}
 
 	@GET
@@ -97,10 +84,49 @@ public class CustomerService {
 	}
 
 	@GET
+	@Path("/searchcustomerbylogin")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Customer searchcustomerbylogin(String login) {
+		BlockingQueue<Customer> listCustomer = new LinkedBlockingQueue<Customer>();
+		Customer customerAux = null;
+		try {
+			JSONObject jsonObject = new JSONObject(login);
+			facade.searchCustomerByLogin(jsonObject.getString("login"),
+					listCustomer);
+			customerAux = listCustomer.take();
+		} catch (JSONException je) {
+			je.printStackTrace();
+		} catch (InterruptedException ie) {
+			ie.printStackTrace();
+		}
+		return customerAux;
+	}
+
+	@GET
+	@Path("/searchcustomerbycpf")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Customer searchCustomerByCpf(String cpf) {
+		BlockingQueue<Customer> listCustomer = new LinkedBlockingQueue<Customer>();
+		Customer customerAux = null;
+
+		try {
+			JSONObject jsonObject = new JSONObject(cpf);
+			facade.searchCustomerByCpf(jsonObject.getString("cpf"),
+					listCustomer);
+			customerAux = listCustomer.take();
+		} catch (JSONException je) {
+			je.printStackTrace();
+		} catch (InterruptedException ie) {
+			ie.printStackTrace();
+		}
+		return customerAux;
+	}
+
+	@GET
 	@Path("/getlistofcustomers")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Customer> getListOfCustomers() {
-		BlockingQueue<List<Customer>> listCustomer = new LinkedBlockingQueue<List<Customer>>();		
+		BlockingQueue<List<Customer>> listCustomer = new LinkedBlockingQueue<List<Customer>>();
 
 		facade.getListOfCustomer(listCustomer);
 
@@ -110,7 +136,6 @@ public class CustomerService {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
 		return listAux;
 	}
 

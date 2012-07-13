@@ -62,13 +62,16 @@ import br.edu.ufpb.threadControl.messengerConcurrent.util.HibernateUtil;
 
 /**
  * Class used to test the facade, which contains all the application methods.
- * Note: This class uses the framework JPA / Hibernate for persistence 
+ *
+ * Note: This class uses the framework JPA / Hibernate for persistence and
+ * constant "ALL_THREADS_TO_BE_IN_STATE" Attribute that has the function to
+ * count the active threads.
  * 
  * @author Diego Sousa - www.diegosousa.com
  * @version 2.0 Copyright (C) 2012 Diego Sousa de Azevedo
  */
 
-public class FacadeTestJpa {
+public class FacadeTestJpaWithConstant {
 
 	private static Facade facade;
 	private ThreadControl threadControl;
@@ -91,7 +94,7 @@ public class FacadeTestJpa {
 	public static void setUpBeforeClass() throws Exception {
 		entityManager = HibernateUtil.getInstance().getFactory()
 				.createEntityManager();
-		System.out.println("Starting the test facade class...");			
+		System.out.println("Starting the test facade class...");
 	}
 
 	/**
@@ -136,11 +139,11 @@ public class FacadeTestJpa {
 		copyListOfAllProduct = new LinkedBlockingQueue<List<Product>>();
 		copyListOfAllPromotion = new LinkedBlockingQueue<List<Promotion>>();
 		copyListOfAllPurchase = new LinkedBlockingQueue<List<Purchase>>();
-	
+
 		takerClientList = new LinkedBlockingQueue<Customer>();
 		takerProductList = new LinkedBlockingQueue<Product>();
 		takerPromotionList = new LinkedBlockingQueue<Promotion>();
-		takerPurchaseList = new LinkedBlockingQueue<Purchase>();	
+		takerPurchaseList = new LinkedBlockingQueue<Purchase>();
 	}
 
 	/**
@@ -160,8 +163,8 @@ public class FacadeTestJpa {
 	public void testAddCustomer() {
 		List<Customer> currentObjectsList = null;
 		Customer customerAuxOne = null;
-		Customer customerAuxTwo = null;		
-		Customer customerAuxThree = null;		
+		Customer customerAuxTwo = null;
+		Customer customerAuxThree = null;
 		Customer customer1 = new Customer("Diego", "111", "3422-1048",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
 		Customer customer2 = new Customer("Ayla", "222", "3422-1049",
@@ -169,14 +172,14 @@ public class FacadeTestJpa {
 		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// Add Customer
-		threadControl.prepare(getAddCustomerFinishedState(3));
+		threadControl.prepare(getAddCustomerFinishedState());
 		facade.addCustomer(customer1);
 		facade.addCustomer(customer2);
 		facade.addCustomer(customer3);
 
 		threadControl.waitUntilStateIsReached();
 		// getting the list of customer
-		threadControl.prepare(getListOfCustomerFinishedState(1));
+		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfCustomer(copyListOfAllCustomer);
@@ -189,7 +192,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(1));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("111", takerClientList);
@@ -201,7 +204,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(2));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("222", takerClientList);
@@ -214,7 +217,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(3));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("333", takerClientList);
@@ -253,14 +256,14 @@ public class FacadeTestJpa {
 		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// AddCustomer
-		threadControl.prepare(getAddCustomerFinishedState(3));
+		threadControl.prepare(getAddCustomerFinishedState());
 		facade.addCustomer(customer1);
 		facade.addCustomer(customer2);
 		facade.addCustomer(customer3);
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getListOfCustomerFinishedState(1));
+		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfCustomer(copyListOfAllCustomer);
@@ -273,7 +276,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(1));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("111", takerClientList);
@@ -286,7 +289,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(2));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("222", takerClientList);
@@ -299,7 +302,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(3));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("333", takerClientList);
@@ -316,7 +319,7 @@ public class FacadeTestJpa {
 		assertTrue(currentObjectsList.contains(customerAuxThree));
 		assertEquals(3, currentObjectsList.size());
 		// Removing Customer
-		threadControl.prepare(getRemoveCustomerFinishedState(2));
+		threadControl.prepare(getRemoveCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.removeCustomer(customerAuxOne);
@@ -325,7 +328,7 @@ public class FacadeTestJpa {
 		copyListOfAllCustomer.clear();
 		threadControl.waitUntilStateIsReached();
 		// getting the list of customer
-		threadControl.prepare(getListOfCustomerFinishedState(2));
+		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfCustomer(copyListOfAllCustomer);
@@ -362,14 +365,14 @@ public class FacadeTestJpa {
 		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 
-		threadControl.prepare(getAddCustomerFinishedState(3));
+		threadControl.prepare(getAddCustomerFinishedState());
 		facade.addCustomer(customer1);
 		facade.addCustomer(customer2);
 		facade.addCustomer(customer3);
 
 		threadControl.waitUntilStateIsReached();
 		// getting the list of customer
-		threadControl.prepare(getListOfCustomerFinishedState(1));
+		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfCustomer(copyListOfAllCustomer);
@@ -382,7 +385,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(1));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("111", takerClientList);
@@ -395,7 +398,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(2));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("222", takerClientList);
@@ -408,7 +411,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(3));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("333", takerClientList);
@@ -425,7 +428,7 @@ public class FacadeTestJpa {
 		assertTrue(currentObjectsList.contains(customerAuxThree));
 		assertEquals(3, currentObjectsList.size());
 		// removing the list of customer
-		threadControl.prepare(getRemoveCustomerFinishedState(2));
+		threadControl.prepare(getRemoveCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.removeCustomer(customerAuxOne);
@@ -434,7 +437,7 @@ public class FacadeTestJpa {
 		copyListOfAllCustomer.clear();
 		threadControl.waitUntilStateIsReached();
 		// getting the list of customer
-		threadControl.prepare(getListOfCustomerFinishedState(2));
+		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfCustomer(copyListOfAllCustomer);
@@ -450,13 +453,13 @@ public class FacadeTestJpa {
 		assertTrue(currentObjectsList.contains(customerAuxThree));
 		assertEquals(1, currentObjectsList.size());
 		// Restoring Customer
-		threadControl.prepare(getRestoreCustomerFinishedState(1));
+		threadControl.prepare(getRestoreCustomerFinishedState());
 		threadControl.proceed();
 		facade.restoreCustomer("111");
 		copyListOfAllCustomer.clear();
 		threadControl.waitUntilStateIsReached();
 		// getting the list of customer
-		threadControl.prepare(getListOfCustomerFinishedState(3));
+		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfCustomer(copyListOfAllCustomer);
@@ -492,14 +495,14 @@ public class FacadeTestJpa {
 		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// Add customer
-		threadControl.prepare(getAddCustomerFinishedState(3));
+		threadControl.prepare(getAddCustomerFinishedState());
 		facade.addCustomer(customer1);
 		facade.addCustomer(customer2);
 		facade.addCustomer(customer3);
 
 		threadControl.waitUntilStateIsReached();
 		// getting the list of customer
-		threadControl.prepare(getListOfCustomerFinishedState(1));
+		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfCustomer(copyListOfAllCustomer);
@@ -512,7 +515,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(1));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("111", takerClientList);
@@ -524,7 +527,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(2));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("222", takerClientList);
@@ -537,7 +540,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(3));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("333", takerClientList);
@@ -554,7 +557,7 @@ public class FacadeTestJpa {
 		assertTrue(currentObjectsList.contains(customerAuxThree));
 		assertEquals(3, currentObjectsList.size());
 		// Editing customer
-		threadControl.prepare(getEditCustomerFinishedState(3));
+		threadControl.prepare(getEditCustomerFinishedState());
 		threadControl.proceed();
 
 		customerAuxOne.setName("Ewerton");
@@ -567,7 +570,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(4));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("111", takerClientList);
@@ -580,7 +583,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(5));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("555", takerClientList);
@@ -593,7 +596,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(6));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("333", takerClientList);
@@ -624,11 +627,11 @@ public class FacadeTestJpa {
 		Customer customer1 = new Customer("Diego", "111", "3422-1048",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
 		// add customer
-		threadControl.prepare(getAddCustomerFinishedState(1));
+		threadControl.prepare(getAddCustomerFinishedState());
 		facade.addCustomer(customer1);
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(1));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 		facade.searchCustomerByCpf("111", takerClientList);
 
@@ -641,7 +644,7 @@ public class FacadeTestJpa {
 
 		assertEquals("diego.sousa@dce.ufpb.br", customerAuxOne.getLogin());
 		// getting customer
-		threadControl.prepare(getSearchCustomerByIdFinishedState(1));
+		threadControl.prepare(getSearchCustomerByIdFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerById(customerAuxOne.getId(), takerClientList);
@@ -675,11 +678,11 @@ public class FacadeTestJpa {
 		Customer customer1 = new Customer("Diego", "111", "3422-1048",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
 		// add Customer
-		threadControl.prepare(getAddCustomerFinishedState(1));
+		threadControl.prepare(getAddCustomerFinishedState());
 		facade.addCustomer(customer1);
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByLoginFinishedState(1));
+		threadControl.prepare(getSearchCustomerByLoginFinishedState());
 		threadControl.proceed();
 		facade.searchCustomerByLogin("diego.sousa@dce.ufpb.br", takerClientList);
 
@@ -708,11 +711,11 @@ public class FacadeTestJpa {
 		Customer customer1 = new Customer("Diego", "111", "3422-1048",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
 		// add Customer
-		threadControl.prepare(getAddCustomerFinishedState(1));
+		threadControl.prepare(getAddCustomerFinishedState());
 		facade.addCustomer(customer1);
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(1));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 		facade.searchCustomerByCpf("111", takerClientList);
 
@@ -749,14 +752,14 @@ public class FacadeTestJpa {
 		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// Add Customer
-		threadControl.prepare(getAddCustomerFinishedState(3));
+		threadControl.prepare(getAddCustomerFinishedState());
 		facade.addCustomer(customer1);
 		facade.addCustomer(customer2);
 		facade.addCustomer(customer3);
 
 		threadControl.waitUntilStateIsReached();
 		// getting the list of customer
-		threadControl.prepare(getListOfCustomerFinishedState(1));
+		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfCustomer(copyListOfAllCustomer);
@@ -769,7 +772,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(1));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("111", takerClientList);
@@ -782,7 +785,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(2));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("222", takerClientList);
@@ -795,7 +798,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(3));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("333", takerClientList);
@@ -832,14 +835,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -852,7 +855,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -864,7 +867,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -875,7 +878,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -913,14 +916,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -933,7 +936,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -945,7 +948,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -956,7 +959,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -974,7 +977,7 @@ public class FacadeTestJpa {
 		assertTrue(currentObjectsList.contains(productAuxThree));
 		assertEquals(3, currentObjectsList.size());
 
-		threadControl.prepare(getRemoveProductFinishedState(2));
+		threadControl.prepare(getRemoveProductFinishedState());
 		threadControl.proceed();
 
 		facade.removeProduct(productAuxOne);
@@ -982,7 +985,7 @@ public class FacadeTestJpa {
 
 		copyListOfAllProduct.clear();
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getListOfProductFinishedState(2));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -1017,14 +1020,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -1037,7 +1040,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -1049,7 +1052,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -1060,7 +1063,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -1078,7 +1081,7 @@ public class FacadeTestJpa {
 		assertTrue(currentObjectsList.contains(productAuxThree));
 		assertEquals(3, currentObjectsList.size());
 
-		threadControl.prepare(getRemoveProductFinishedState(2));
+		threadControl.prepare(getRemoveProductFinishedState());
 		threadControl.proceed();
 
 		facade.removeProduct(productAuxOne);
@@ -1086,7 +1089,7 @@ public class FacadeTestJpa {
 
 		copyListOfAllProduct.clear();
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getListOfProductFinishedState(2));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -1102,13 +1105,13 @@ public class FacadeTestJpa {
 		assertTrue(currentObjectsList.contains(productAuxThree));
 		assertEquals(1, currentObjectsList.size());
 
-		threadControl.prepare(getRestoreProductFinishedState(1));
+		threadControl.prepare(getRestoreProductFinishedState());
 		threadControl.proceed();
 		facade.restoreProduct("Ipod");
 		copyListOfAllProduct.clear();
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(3));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -1143,14 +1146,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -1163,7 +1166,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -1175,7 +1178,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -1186,7 +1189,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -1204,7 +1207,7 @@ public class FacadeTestJpa {
 		assertTrue(currentObjectsList.contains(productAuxThree));
 		assertEquals(3, currentObjectsList.size());
 
-		threadControl.prepare(getEditProductFinishedState(3));
+		threadControl.prepare(getEditProductFinishedState());
 		threadControl.proceed();
 
 		productAuxOne.setName("Sony Vaio");
@@ -1216,7 +1219,7 @@ public class FacadeTestJpa {
 		facade.editProduct(productAuxThree);
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(4));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("Sony Vaio", takerProductList);
@@ -1228,7 +1231,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(5));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -1239,7 +1242,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(6));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -1275,14 +1278,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -1295,7 +1298,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -1307,7 +1310,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -1318,7 +1321,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -1330,7 +1333,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByIdFinishedState(1));
+		threadControl.prepare(getSearchProductByIdFinishedState());
 
 		facade.searchProductById(productAuxOne.getId(), takerProductList);
 
@@ -1341,7 +1344,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByIdFinishedState(2));
+		threadControl.prepare(getSearchProductByIdFinishedState());
 
 		facade.searchProductById(productAuxTwo.getId(), takerProductList);
 
@@ -1352,7 +1355,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByIdFinishedState(3));
+		threadControl.prepare(getSearchProductByIdFinishedState());
 
 		facade.searchProductById(productAuxThree.getId(), takerProductList);
 
@@ -1389,14 +1392,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -1409,7 +1412,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -1421,7 +1424,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -1432,7 +1435,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -1468,14 +1471,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -1488,7 +1491,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		assertEquals(3, currentObjectsList.size());
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -1523,14 +1526,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -1543,7 +1546,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -1555,7 +1558,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -1566,7 +1569,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -1597,14 +1600,14 @@ public class FacadeTestJpa {
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProductOne, 3000, 30);
 
-		threadControl.prepare(getAddPromotionFinishedState(2));
+		threadControl.prepare(getAddPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPromotionFinishedState(1));
+		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfPromotion(copyListOfAllPromotion);
@@ -1617,7 +1620,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchPromotionByNameFinishedState(1));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promoção Apple", takerPromotionList);
@@ -1629,7 +1632,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchPromotionByNameFinishedState(2));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promotion Apple Combo",
@@ -1666,14 +1669,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -1685,7 +1688,7 @@ public class FacadeTestJpa {
 		}
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -1696,7 +1699,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -1707,7 +1710,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -1736,14 +1739,14 @@ public class FacadeTestJpa {
 				50, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
-		threadControl.prepare(getAddPromotionFinishedState(2));
+		threadControl.prepare(getAddPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPromotionFinishedState(1));
+		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfPromotion(copyListOfAllPromotion);
@@ -1755,7 +1758,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchPromotionByNameFinishedState(1));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promoção Apple", takerPromotionList);
@@ -1767,7 +1770,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchPromotionByNameFinishedState(2));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promotion Apple Combo",
@@ -1784,12 +1787,12 @@ public class FacadeTestJpa {
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxThree));
 		assertEquals(3, currentObjectsListProduct.size());
 		// Remove Promotion
-		threadControl.prepare(getRemovePromotionFinishedState(1));
+		threadControl.prepare(getRemovePromotionFinishedState());
 		threadControl.proceed();
 		facade.removePromotion(promotionAuxTwo);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPromotionFinishedState(2));
+		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfPromotion(copyListOfAllPromotion);
@@ -1824,14 +1827,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -1843,7 +1846,7 @@ public class FacadeTestJpa {
 		}
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -1854,7 +1857,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -1865,7 +1868,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -1894,14 +1897,14 @@ public class FacadeTestJpa {
 				50, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
-		threadControl.prepare(getAddPromotionFinishedState(2));
+		threadControl.prepare(getAddPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPromotionFinishedState(1));
+		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfPromotion(copyListOfAllPromotion);
@@ -1913,7 +1916,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchPromotionByNameFinishedState(1));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promoção Apple", takerPromotionList);
@@ -1925,7 +1928,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchPromotionByNameFinishedState(2));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promotion Apple Combo",
@@ -1942,12 +1945,12 @@ public class FacadeTestJpa {
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxThree));
 		assertEquals(3, currentObjectsListProduct.size());
 		// removePromotion
-		threadControl.prepare(getRemovePromotionFinishedState(1));
+		threadControl.prepare(getRemovePromotionFinishedState());
 		threadControl.proceed();
 		facade.removePromotion(promotionAuxTwo);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPromotionFinishedState(2));
+		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfPromotion(copyListOfAllPromotion);
@@ -1960,14 +1963,14 @@ public class FacadeTestJpa {
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxOne));
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxTwo));
 
-		threadControl.prepare(getRestorePromotionFinishedState(1));
+		threadControl.prepare(getRestorePromotionFinishedState());
 		threadControl.proceed();
 		// restore Promotion
 		facade.restorePromotion("Promotion Apple Combo");
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPromotionFinishedState(3));
+		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfPromotion(copyListOfAllPromotion);
@@ -2002,14 +2005,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -2021,7 +2024,7 @@ public class FacadeTestJpa {
 		}
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -2032,7 +2035,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -2043,7 +2046,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -2072,14 +2075,14 @@ public class FacadeTestJpa {
 				50, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
-		threadControl.prepare(getAddPromotionFinishedState(2));
+		threadControl.prepare(getAddPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPromotionFinishedState(1));
+		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfPromotion(copyListOfAllPromotion);
@@ -2091,7 +2094,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchPromotionByNameFinishedState(1));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promoção Apple", takerPromotionList);
@@ -2103,7 +2106,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchPromotionByNameFinishedState(2));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promotion Apple Combo",
@@ -2120,7 +2123,7 @@ public class FacadeTestJpa {
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxThree));
 		assertEquals(3, currentObjectsListProduct.size());
 		// Edit Promotion
-		threadControl.prepare(getEditPromotionFinishedState(1));
+		threadControl.prepare(getEditPromotionFinishedState());
 		threadControl.proceed();
 
 		promotionAuxTwo.setName("Promotion lightning Apple");
@@ -2128,7 +2131,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// Search Promotion By Name
-		threadControl.prepare(getSearchPromotionByNameFinishedState(3));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promotion lightning Apple",
@@ -2166,14 +2169,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -2184,7 +2187,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -2195,7 +2198,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -2220,14 +2223,14 @@ public class FacadeTestJpa {
 				50, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
-		threadControl.prepare(getAddPromotionFinishedState(2));
+		threadControl.prepare(getAddPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
 		threadControl.waitUntilStateIsReached();
 		// Getting Promotion By Id
-		threadControl.prepare(getSearchPromotionByIdFinishedState(1));
+		threadControl.prepare(getSearchPromotionByIdFinishedState());
 		threadControl.proceed();
 		facade.searchPromotionById(promotion1.getId(), takerPromotionList);
 
@@ -2262,14 +2265,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -2280,7 +2283,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -2291,7 +2294,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -2316,14 +2319,14 @@ public class FacadeTestJpa {
 				50, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
-		threadControl.prepare(getAddPromotionFinishedState(2));
+		threadControl.prepare(getAddPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
 		threadControl.waitUntilStateIsReached();
 		// Getting Promotion By Name
-		threadControl.prepare(getSearchPromotionByNameFinishedState(1));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 		facade.searchPromotionByName(promotion1.getName(), takerPromotionList);
 
@@ -2357,14 +2360,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -2375,7 +2378,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -2386,7 +2389,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -2411,14 +2414,14 @@ public class FacadeTestJpa {
 				50, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
-		threadControl.prepare(getAddPromotionFinishedState(2));
+		threadControl.prepare(getAddPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
 		threadControl.waitUntilStateIsReached();
 		// Getting Promotion By Product
-		threadControl.prepare(getSearchPromotionByProductFinishedState(1));
+		threadControl.prepare(getSearchPromotionByProductFinishedState());
 		threadControl.proceed();
 		facade.searchPromotionByProduct(productAuxThree, copyListOfAllPromotion);
 
@@ -2454,14 +2457,14 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -2472,7 +2475,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -2483,7 +2486,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -2509,14 +2512,14 @@ public class FacadeTestJpa {
 				50, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
-		threadControl.prepare(getAddPromotionFinishedState(2));
+		threadControl.prepare(getAddPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
 		threadControl.waitUntilStateIsReached();
 		// Getting Promotion By Product
-		threadControl.prepare(getSearchPromotionByNameFinishedState(1));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promotion Apple Combo",
@@ -2530,7 +2533,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPromotionFinishedState(1));
+		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 		facade.getListOfPromotion(copyListOfAllPromotion);
 
@@ -2568,14 +2571,14 @@ public class FacadeTestJpa {
 		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// Add Customer
-		threadControl.prepare(getAddCustomerFinishedState(3));
+		threadControl.prepare(getAddCustomerFinishedState());
 		facade.addCustomer(customer1);
 		facade.addCustomer(customer2);
 		facade.addCustomer(customer3);
 
 		threadControl.waitUntilStateIsReached();
 		// getting the list of customer
-		threadControl.prepare(getListOfCustomerFinishedState(1));
+		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfCustomer(copyListOfAllCustomer);
@@ -2588,7 +2591,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(1));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("111", takerClientList);
@@ -2600,7 +2603,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(2));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("222", takerClientList);
@@ -2613,7 +2616,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(3));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("333", takerClientList);
@@ -2643,7 +2646,7 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		threadControl.proceed();
 		facade.addProduct(product1);
 		facade.addProduct(product2);
@@ -2651,7 +2654,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -2664,7 +2667,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -2676,7 +2679,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -2687,7 +2690,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -2726,14 +2729,14 @@ public class FacadeTestJpa {
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 
-		threadControl.prepare(getAddPromotionFinishedState(2));
+		threadControl.prepare(getAddPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPromotionFinishedState(1));
+		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfPromotion(copyListOfAllPromotion);
@@ -2746,7 +2749,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchPromotionByNameFinishedState(1));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promoção Apple", takerPromotionList);
@@ -2758,7 +2761,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchPromotionByNameFinishedState(2));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promotion Apple Combo",
@@ -2792,7 +2795,7 @@ public class FacadeTestJpa {
 		Purchase purchaseThree = new Purchase(customerAuxThree, listProductAux,
 				listPromotionAux);
 
-		threadControl.prepare(getAddPurchaseFinishedState(3));
+		threadControl.prepare(getAddPurchaseFinishedState());
 		threadControl.proceed();
 
 		facade.addPurchase(purchaseOne);
@@ -2800,7 +2803,7 @@ public class FacadeTestJpa {
 		facade.addPurchase(purchaseThree);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPurchaseFinishedState(1));
+		threadControl.prepare(getListOfPurchaseFinishedState());
 		threadControl.proceed();
 		facade.getListOfPurchase(copyListOfAllPurchase);
 
@@ -2848,14 +2851,14 @@ public class FacadeTestJpa {
 		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// Add Customer
-		threadControl.prepare(getAddCustomerFinishedState(3));
+		threadControl.prepare(getAddCustomerFinishedState());
 		facade.addCustomer(customer1);
 		facade.addCustomer(customer2);
 		facade.addCustomer(customer3);
 
 		threadControl.waitUntilStateIsReached();
 		// getting the list of customer
-		threadControl.prepare(getListOfCustomerFinishedState(1));
+		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfCustomer(copyListOfAllCustomer);
@@ -2868,7 +2871,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(1));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("111", takerClientList);
@@ -2880,7 +2883,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(2));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("222", takerClientList);
@@ -2893,7 +2896,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(3));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("333", takerClientList);
@@ -2923,7 +2926,7 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		threadControl.proceed();
 		facade.addProduct(product1);
 		facade.addProduct(product2);
@@ -2931,7 +2934,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -2944,7 +2947,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -2956,7 +2959,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -2967,7 +2970,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -3006,14 +3009,14 @@ public class FacadeTestJpa {
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 
-		threadControl.prepare(getAddPromotionFinishedState(2));
+		threadControl.prepare(getAddPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPromotionFinishedState(1));
+		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfPromotion(copyListOfAllPromotion);
@@ -3026,7 +3029,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchPromotionByNameFinishedState(1));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promoção Apple", takerPromotionList);
@@ -3038,7 +3041,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchPromotionByNameFinishedState(2));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promotion Apple Combo",
@@ -3072,7 +3075,7 @@ public class FacadeTestJpa {
 		Purchase purchaseThree = new Purchase(customerAuxThree, listProductAux,
 				listPromotionAux);
 
-		threadControl.prepare(getAddPurchaseFinishedState(3));
+		threadControl.prepare(getAddPurchaseFinishedState());
 		threadControl.proceed();
 
 		facade.addPurchase(purchaseOne);
@@ -3080,7 +3083,7 @@ public class FacadeTestJpa {
 		facade.addPurchase(purchaseThree);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPurchaseFinishedState(1));
+		threadControl.prepare(getListOfPurchaseFinishedState());
 		threadControl.proceed();
 		facade.getListOfPurchase(copyListOfAllPurchase);
 
@@ -3094,13 +3097,13 @@ public class FacadeTestJpa {
 		assertEquals(3, listPurchase.size());
 		Purchase purchaseAux = listPurchase.get(0);
 
-		threadControl.prepare(getRemovePurchaseFinishedState(1));
+		threadControl.prepare(getRemovePurchaseFinishedState());
 		threadControl.proceed();
 		facade.removePurchase(purchaseAux);
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPurchaseFinishedState(2));
+		threadControl.prepare(getListOfPurchaseFinishedState());
 		threadControl.proceed();
 		facade.getListOfPurchase(copyListOfAllPurchase);
 
@@ -3136,14 +3139,14 @@ public class FacadeTestJpa {
 		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// Add Customer
-		threadControl.prepare(getAddCustomerFinishedState(3));
+		threadControl.prepare(getAddCustomerFinishedState());
 		facade.addCustomer(customer1);
 		facade.addCustomer(customer2);
 		facade.addCustomer(customer3);
 
 		threadControl.waitUntilStateIsReached();
 		// getting the list of customer
-		threadControl.prepare(getListOfCustomerFinishedState(1));
+		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfCustomer(copyListOfAllCustomer);
@@ -3156,7 +3159,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(1));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("111", takerClientList);
@@ -3168,7 +3171,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(2));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("222", takerClientList);
@@ -3181,7 +3184,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(3));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("333", takerClientList);
@@ -3211,7 +3214,7 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		threadControl.proceed();
 		facade.addProduct(product1);
 		facade.addProduct(product2);
@@ -3219,7 +3222,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -3232,7 +3235,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -3244,7 +3247,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -3255,7 +3258,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -3294,14 +3297,14 @@ public class FacadeTestJpa {
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 
-		threadControl.prepare(getAddPromotionFinishedState(2));
+		threadControl.prepare(getAddPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPromotionFinishedState(1));
+		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfPromotion(copyListOfAllPromotion);
@@ -3314,7 +3317,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchPromotionByNameFinishedState(1));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promoção Apple", takerPromotionList);
@@ -3326,7 +3329,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchPromotionByNameFinishedState(2));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promotion Apple Combo",
@@ -3360,7 +3363,7 @@ public class FacadeTestJpa {
 		Purchase purchaseThree = new Purchase(customerAuxThree, listProductAux,
 				listPromotionAux);
 
-		threadControl.prepare(getAddPurchaseFinishedState(3));
+		threadControl.prepare(getAddPurchaseFinishedState());
 		threadControl.proceed();
 
 		facade.addPurchase(purchaseOne);
@@ -3368,7 +3371,7 @@ public class FacadeTestJpa {
 		facade.addPurchase(purchaseThree);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPurchaseFinishedState(1));
+		threadControl.prepare(getListOfPurchaseFinishedState());
 		threadControl.proceed();
 		facade.getListOfPurchase(copyListOfAllPurchase);
 
@@ -3395,9 +3398,9 @@ public class FacadeTestJpa {
 		threadControl.proceed();
 
 	}
-	
+
 	@Test
-	public void testGetListPurchase() {		
+	public void testGetListPurchase() {
 
 		List<Customer> currentObjectsListCustomer = null;
 		Customer customerAuxOne = null;
@@ -3411,14 +3414,14 @@ public class FacadeTestJpa {
 		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// Add Customer
-		threadControl.prepare(getAddCustomerFinishedState(3));
+		threadControl.prepare(getAddCustomerFinishedState());
 		facade.addCustomer(customer1);
 		facade.addCustomer(customer2);
 		facade.addCustomer(customer3);
 
 		threadControl.waitUntilStateIsReached();
 		// getting the list of customer
-		threadControl.prepare(getListOfCustomerFinishedState(1));
+		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfCustomer(copyListOfAllCustomer);
@@ -3431,7 +3434,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(1));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("111", takerClientList);
@@ -3443,7 +3446,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(2));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("222", takerClientList);
@@ -3456,7 +3459,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState(3));
+		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
 		facade.searchCustomerByCpf("333", takerClientList);
@@ -3486,7 +3489,7 @@ public class FacadeTestJpa {
 		Product product2 = new Product("IPhone", 2200.00, 200);
 		Product product3 = new Product("IPad", 3200.00, 300);
 
-		threadControl.prepare(getAddProductFinishedState(3));
+		threadControl.prepare(getAddProductFinishedState());
 		threadControl.proceed();
 		facade.addProduct(product1);
 		facade.addProduct(product2);
@@ -3494,7 +3497,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfProductFinishedState(1));
+		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfProduct(copyListOfAllProduct);
@@ -3507,7 +3510,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchProductByNameFinishedState(1));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPod", takerProductList);
@@ -3519,7 +3522,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(2));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPad", takerProductList);
@@ -3530,7 +3533,7 @@ public class FacadeTestJpa {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchProductByNameFinishedState(3));
+		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchProductByName("IPhone", takerProductList);
@@ -3569,14 +3572,14 @@ public class FacadeTestJpa {
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 
-		threadControl.prepare(getAddPromotionFinishedState(2));
+		threadControl.prepare(getAddPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPromotionFinishedState(1));
+		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 
 		facade.getListOfPromotion(copyListOfAllPromotion);
@@ -3589,7 +3592,7 @@ public class FacadeTestJpa {
 
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getSearchPromotionByNameFinishedState(1));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promoção Apple", takerPromotionList);
@@ -3601,7 +3604,7 @@ public class FacadeTestJpa {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		threadControl.prepare(getSearchPromotionByNameFinishedState(2));
+		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
 		facade.searchPromotionByName("Promotion Apple Combo",
@@ -3635,7 +3638,7 @@ public class FacadeTestJpa {
 		Purchase purchaseThree = new Purchase(customerAuxThree, listProductAux,
 				listPromotionAux);
 
-		threadControl.prepare(getAddPurchaseFinishedState(3));
+		threadControl.prepare(getAddPurchaseFinishedState());
 		threadControl.proceed();
 
 		facade.addPurchase(purchaseOne);
@@ -3643,7 +3646,7 @@ public class FacadeTestJpa {
 		facade.addPurchase(purchaseThree);
 		threadControl.waitUntilStateIsReached();
 
-		threadControl.prepare(getListOfPurchaseFinishedState(1));
+		threadControl.prepare(getListOfPurchaseFinishedState());
 		threadControl.proceed();
 		facade.getListOfPurchase(copyListOfAllPurchase);
 
@@ -3668,97 +3671,97 @@ public class FacadeTestJpa {
 
 		assertEquals(customerAuxOne, purchaseAux.getCustomer());
 		threadControl.proceed();
-		
+
 	}
 
 	// -------SystemConfiguration Generic--------
 
 	public SystemConfiguration getGenericSystemConfiguration(
-			String threadClassName, ThreadState expectedState,
-			int timesToBeInState) {
+			String threadClassName, ThreadState expectedState) {
 		ThreadConfiguration config = new ThreadConfiguration(threadClassName,
-				expectedState, timesToBeInState);
+				expectedState, ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	// -------------- SystemConfiguration
-	// Customer--------------------------------
+	// -------------- SystemConfiguration Customer-----------------------
 
-	public SystemConfiguration getAddCustomerFinishedState(int timesToBeInState) {
+	public SystemConfiguration getAddCustomerFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableAddCustomer.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getRemoveCustomerFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getRemoveCustomerFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableRemoveCustomer.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getEditCustomerFinishedState(int timesToBeInState) {
+	public SystemConfiguration getEditCustomerFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableEditCustomer.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getRestoreCustomerFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getRestoreCustomerFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableRestoreCustomer.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getSearchCustomerByIdFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getSearchCustomerByIdFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableSearchCustomerById.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getSearchCustomerByLoginFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getSearchCustomerByLoginFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableSearchCustomerByLogin.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getSearchCustomerByCpfFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getSearchCustomerByCpfFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableSearchCustomerByCpf.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getListOfCustomerFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getListOfCustomerFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableGetListCustomer.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
@@ -3766,69 +3769,71 @@ public class FacadeTestJpa {
 
 	// ---------SystemConfiguration Product--------------
 
-	public SystemConfiguration getAddProductFinishedState(int timesToBeInState) {
+	public SystemConfiguration getAddProductFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableAddProduct.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getRemoveProductFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getRemoveProductFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableRemoveProduct.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getRestoreProductFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getRestoreProductFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableRestoreProduct.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getEditProductFinishedState(int timesToBeInState) {
+	public SystemConfiguration getEditProductFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableEditProduct.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getSearchProductByIdFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getSearchProductByIdFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableSearchProductById.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getSearchProductByNameFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getSearchProductByNameFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableSearchProductByName.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getListOfProductFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getListOfProductFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableGetListProduct.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
@@ -3836,80 +3841,81 @@ public class FacadeTestJpa {
 
 	// ---------SystemConfiguration Promotion--------------
 
-	public SystemConfiguration getAddPromotionFinishedState(int timesToBeInState) {
+	public SystemConfiguration getAddPromotionFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableAddPromotion.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getRemovePromotionFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getRemovePromotionFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableRemovePromotion.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getRestorePromotionFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getRestorePromotionFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableRestorePromotion.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getEditPromotionFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getEditPromotionFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableEditPromotion.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getSearchPromotionByIdFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getSearchPromotionByIdFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableSearchPromotionById.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getSearchPromotionByNameFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getSearchPromotionByNameFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableSearchPromotionByName.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getSearchPromotionByProductFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getSearchPromotionByProductFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableSearchPromotionByProduct.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getListOfPromotionFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getListOfPromotionFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableGetListPromotion.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
@@ -3917,50 +3923,51 @@ public class FacadeTestJpa {
 
 	// ---------SystemConfiguration Purchases Of Products--------------
 
-	public SystemConfiguration getAddPurchaseFinishedState(int timesToBeInState) {
+	public SystemConfiguration getAddPurchaseFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableAddPurchase.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getRemovePurchaseFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getRemovePurchaseFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableRemovePurchase.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getSearchPurchaseByProductFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getSearchPurchaseByProductFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableSearchPurchaseByProduct.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getSearchPurchasesOfACustomerFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getSearchPurchasesOfACustomerFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableSearchPurchasesOfACustomer.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
 	}
 
-	public SystemConfiguration getListOfPurchaseFinishedState(
-			int timesToBeInState) {
+	public SystemConfiguration getListOfPurchaseFinishedState() {
 		ThreadConfiguration config = new ThreadConfiguration(
 				RunnableGetListPurchase.class.getCanonicalName(),
-				ThreadState.FINISHED, timesToBeInState);
+				ThreadState.FINISHED,
+				ThreadConfiguration.ALL_THREADS_TO_BE_IN_STATE);
 		ListOfThreadConfigurations sysConfig = new ListOfThreadConfigurations();
 		sysConfig.addThreadConfiguration(config);
 		return sysConfig;
