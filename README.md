@@ -53,6 +53,8 @@ since the framework is implemented JPA (Java Persistence API)<br />
 
 2 - In eclipse go to file -> import -> type in the search above "Existing maven projects" -> next -> Browser -> select the project messengerConcurrent -> Finish.
 
+2.1 - Wait until the maven download all libraries.
+
 The End!
 
 <h1>Configuring the project:
@@ -117,6 +119,8 @@ já que está implementado o framework JPA (Java Persistence API)<br />
 1.2 - git clone git@github.com:DiegoSousa/MessengerConcurrent.git
 
 2 - No eclipse va em file -> import -> Na busca acima procure por "Existing maven projects" -> next -> Browser -> selecione o projeto messengerConcurrent -> Finish.
+
+2.1 - Aguarde até que o maven baixe todas as bibliotecas.
 
 Fim!
 
