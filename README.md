@@ -34,11 +34,13 @@ since the framework is implemented JPA (Java Persistence API)<br />
 
 	cd ~/workspace/
 
-3.1 - Then
+3.1 - Ctrl+c and Ctrl+v in terminal:
 
 	git clone git@github.com:DiegoSousa/MessengerConcurrent.git
 
-4 - In eclipse go in file -> import -> type in the search above "Existing maven projects" -> next -> Browser -> select the project messengerConcurrent -> Finish.
+4 - In eclipse go in: 
+
+	file -> import -> type in the search above "Existing maven projects" -> next -> Browser -> select the project messengerConcurrent -> Finish.
 
 4.1 - Wait until the maven download all libraries.
 
