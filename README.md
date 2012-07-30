@@ -34,13 +34,14 @@ since the framework is implemented JPA (Java Persistence API)<br />
 
 	cd ~/workspace/
 
-3.1 - Ctrl+c and Ctrl+v in terminal:
+3.1 - Ctrl+C and Ctrl+V in terminal:
 
 	git clone git@github.com:DiegoSousa/MessengerConcurrent.git
 
 4 - In eclipse go in: 
 
-	file -> import -> type in the search above "Existing maven projects" -> next -> Browser -> select the project messengerConcurrent -> Finish.
+	file -> import -> type in the search above "Existing maven projects" -> next -> Browser -> 
+	select the project messengerConcurrent -> Finish.
 
 4.1 - Wait until the maven download all libraries.
 
@@ -48,9 +49,14 @@ The End!
 
 <h1>Configuring the project:
 
-1 - Still in Properties go on the "Source" -> Add Folder -> threadControl_0.3_src -> check the option srcAspectsTC and srcTC. 
+1 - Right-click in:
 
-2 - Go Again in MessengerConcurrent -> Configure -> Convert to AspectJ Project.
+	MessengerConcurrent -> properties -> "Source" -> Add Folder -> threadControl_<version>_src -> 
+	check the option srcAspectsTC and srcTC. 
+
+2 - Right-click in:
+
+	MessengerConcurrent -> Configure -> Convert to AspectJ Project.
 
 <h1>Configuring the Database:
 
@@ -62,14 +68,15 @@ The End!
 
 	http://www.pgadmin.org/download/
 
-1.2 -There are two ways of creating the database. Using the script creation (1.2.1) or creating manually using the client PostgreSQL PgAdmin (1.2.2).
-
-	<b>Choose the one that interests you -<b>
+1.2 -There are two ways of creating the database. Using the script creation (1.2.1) or 
+creating manually using the client PostgreSQL PgAdmin (1.2.2). <b>Choose the one that interests you. -<b>	
  
 1.2.1 -<b>Using the script creation:<b> 
 
-Open your terminal type -> cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database -> ENTER -> 
-chmod +x createDatabaseAndTables.sh -> ./createDatabaseAndTables.sh
+Open your terminal type 
+
+	cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database -> ENTER -> 
+	chmod +x createDatabaseAndTables.sh -> ./createDatabaseAndTables.sh
 
 1.2.2 -<b>Creating manually using the client PostgreSQL PgAdmin:<b>
 
