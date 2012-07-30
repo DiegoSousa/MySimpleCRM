@@ -19,49 +19,59 @@ Test: JUnit 4+³<br />
 Database: PostgreSQL Preferably, but it is possible to use other banks,<br />
 since the framework is implemented JPA (Java Persistence API)<br />
 
-<h1>Configuring the Database:
-
-1 - <b>Install PostgreSQL<b> (http://www.postgresql.org/download/).
-
-1.1 - If you think necessary, you can install the customer PostgreSQL (http://www.pgadmin.org/download/).
-
-1.2 - Create a database with the name "messengerConcurrent" and set the "Login Role" default PostgreSQL, which contains login and password 'postgres'.
-
 <h1>Configuring the Eclipse:
  
-<b>2 - To install AJDT:<b>
+<b>1 - To install AJDT:<b>
 
-2.1 Help -> Eclipse MarketPlace -> install AJDT corresponding to your version of eclipse.
+	In Eclipse go in -> Help -> Eclipse MarketPlace -> install AJDT corresponding to your version of eclipse.
 
-<b>3 To install Maven:<b>
+<b>2 To install Maven:<b>
 
-3.1 Help -> Eclipse MarketPlace -> install the "Maven Integration for eclipse WTP".
-
-<b>Come down to!<b>
+	In Eclipse go in -> Help -> Eclipse MarketPlace -> install the "Maven Integration for eclipse WTP".
 
 <h1>To correctly import the application just follow the following steps.
 
-1 - Using a Terminal or a Customer Git, do the clone within your workspace.
+3 - Using a Terminal or a Customer Git, do the clone within your workspace.
 
-1.1 - cd workspace
+3.1 - cd ~/workspace/
 
-1.2 - git clone git@github.com:DiegoSousa/MessengerConcurrent.git
+3.2 - git clone git@github.com:DiegoSousa/MessengerConcurrent.git
 
-2 - In eclipse go to file -> import -> type in the search above "Existing maven projects" -> next -> Browser -> select the project messengerConcurrent -> Finish.
+4 - In eclipse go in file -> import -> type in the search above "Existing maven projects" -> next -> Browser -> select the project messengerConcurrent -> Finish.
 
-2.1 - Wait until the maven download all libraries.
+4.1 - Wait until the maven download all libraries.
 
 The End!
 
 <h1>Configuring the project:
 
-1 - Go MessengerConcurrent -> Properties -> Java Build Path -> Libraries -> Add Library -> JUnit -> Next -> In Junit Library Version type Version4 -> Finish.
+1 - Still in Properties go on the "Source" -> Add Folder -> threadControl_0.3_src -> check the option srcAspectsTC and srcTC. 
 
-2 - Still in Properties go on the "Source" -> Add Folder -> threadControl_0.3_src -> check the option srcAspectsTC and srcTC.
+2 - Go Again in MessengerConcurrent -> Configure -> Convert to AspectJ Project.
 
-3 - Still in Properties locate "Project Facets" -> check the options (java - version 1.6+) and (Dynamic Web Module - version 3.0+) -> OK. 
+<h1>Configuring the Database:
 
-4 - Go Again in MessengerConcurrent -> Configure -> Convert to AspectJ Project.
+1 - <b>Install PostgreSQL<b> 
+
+	(http://www.postgresql.org/download/).
+
+1.1 - If you think necessary, you can install the customer PostgreSQL 
+
+	http://www.pgadmin.org/download/
+
+1.2 -There are two ways of creating the database. Using the script creation (1.2.1) or creating manually using the client PostgreSQL PgAdmin (1.2.2).
+
+	<b>Choose the one that interests you -<b>
+ 
+1.2.1 -<b>Using the script creation:<b> 
+
+Open your terminal type -> cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database -> ENTER -> 
+chmod +x createDatabaseAndTables.sh -> ./createDatabaseAndTables.sh
+
+1.2.2 -<b>Creating manually using the client PostgreSQL PgAdmin:<b>
+
+Create a database with the name "messengerConcurrent" and set the "Login Role" default PostgreSQL, which contains login and password 'postgres'.
+
 
 <b>The End!<b>
 
