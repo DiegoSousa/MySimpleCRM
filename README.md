@@ -15,7 +15,7 @@ JDK: Version 6+<br />
 IDE: Eclipse Java EE indigo+<br />
 AJDT (AspectJ Development Tools)¹<br />
 Maven: Version 2²<br />
-Test: JUnit 4³<br />
+Test: JUnit 4+³<br />
 Database: PostgreSQL Preferably, but it is possible to use other banks,<br />
 since the framework is implemented JPA (Java Persistence API)<br />
 
@@ -36,10 +36,6 @@ since the framework is implemented JPA (Java Persistence API)<br />
 <b>3 To install Maven:<b>
 
 3.1 Help -> Eclipse MarketPlace -> install the "Maven Integration for eclipse WTP".
-
-<b>4 - If you do not have the JUnit 4:<b>
-
-4.1 - Go http://www.junit.org/download the jar and add to /eclipse/plugins.
 
 <b>Come down to!<b>
 
