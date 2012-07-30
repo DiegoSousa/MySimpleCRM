@@ -30,46 +30,46 @@ since the framework is implemented JPA (Java Persistence API)<br />
 
 <h1>To correctly import the application just follow the following steps.
 
-3 - Using a Terminal or a Customer Git, do the clone within your workspace.
+<b>3 - Using a Terminal or a Customer Git, do the clone within your workspace.<b>
 
 	cd ~/workspace/
 
-3.1 - Ctrl+C and Ctrl+V in terminal:
+<b>3.1 - Ctrl+C and Ctrl+V in terminal:<b>
 
 	git clone git@github.com:DiegoSousa/MessengerConcurrent.git
 
-4 - In eclipse go in: 
+<b>4 - In eclipse go in:<b> 
 
 	file -> import -> type in the search above "Existing maven projects" -> next -> Browser -> 
 	select the project messengerConcurrent -> Finish.
 
-4.1 - Wait until the maven download all libraries.
+<b>4.1 - Wait until the maven download all libraries.<b>
 
 The End!
 
 <h1>Configuring the project:
 
-1 - Right-click in:
+<b>1 - Right-click in:<b>
 
 	MessengerConcurrent -> properties -> "Source" -> Add Folder -> threadControl_<version>_src -> 
 	check the option srcAspectsTC and srcTC. 
 
-2 - Right-click in:
+<b>2 - Right-click in:<b>
 
 	MessengerConcurrent -> Configure -> Convert to AspectJ Project.
 
 <h1>Configuring the Database:
 
-1 - <b>Install PostgreSQL<b> 
+<b>1 - Install PostgreSQL<b> 
 
 	(http://www.postgresql.org/download/).
 
-1.1 - If you think necessary, you can install the customer PostgreSQL 
+<b>1.1 - If you think necessary, you can install the customer PostgreSQL<b>
 
 	http://www.pgadmin.org/download/
 
-1.2 -There are two ways of creating the database. Using the script creation (1.2.1) or 
-creating manually using the client PostgreSQL PgAdmin (1.2.2). <b>Choose the one that interests you. -<b>	
+<b>1.2 -There are two ways of creating the database. Using the script creation (1.2.1) or 
+creating manually using the client PostgreSQL PgAdmin (1.2.2). <b>Choose the one that interests you.<b>
  
 1.2.1 -<b>Using the script creation:<b> 
 
@@ -78,7 +78,7 @@ Open your terminal type
 	cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database -> ENTER -> 
 	chmod +x createDatabaseAndTables.sh -> ./createDatabaseAndTables.sh
 
-1.2.2 -<b>Creating manually using the client PostgreSQL PgAdmin:<b>
+<b>1.2.2 - Creating manually using the client PostgreSQL PgAdmin:<b>
 
 Create a database with the name "messengerConcurrent" and set the "Login Role" default PostgreSQL, which contains login and password 'postgres'.
 
