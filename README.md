@@ -71,9 +71,9 @@ The End!
 <b>1.2 -There are two ways of creating the database. Using the script creation (1.2.1) or 
 creating manually using the client PostgreSQL PgAdmin (1.2.2). <b>Choose the one that interests you.<b>
  
-1.2.1 -<b>Using the script creation:<b> 
+<b>1.2.1 - Using the script creation<b> 
 
-Open your terminal type 
+Open your terminal type:
 
 	cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database -> ENTER -> 
 	chmod +x createDatabaseAndTables.sh -> ./createDatabaseAndTables.sh
