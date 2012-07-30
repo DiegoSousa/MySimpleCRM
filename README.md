@@ -80,7 +80,7 @@ Open your terminal type:
 
 <b>1.2.2 - Creating manually using the client PostgreSQL PgAdmin:<b>
 
-# Create a database with the name "messengerConcurrent" and set the "Login Role" default PostgreSQL, which contains login and password 'postgres'.
+	Create a database with the name "messengerConcurrent" and set the "Login Role" default PostgreSQL, which contains login and password 'postgres'.
 
 
 <b>The End!<b>
