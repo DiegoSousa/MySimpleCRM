@@ -15,7 +15,6 @@ JDK: Version 6+<br />
 IDE: Eclipse Java EE indigo+<br />
 AJDT (AspectJ Development Tools)¹<br />
 Maven: Version 2²<br />
-Test: JUnit 4+³<br />
 Database: PostgreSQL Preferably, but it is possible to use other banks,<br />
 since the framework is implemented JPA (Java Persistence API)<br />
 
@@ -33,9 +32,11 @@ since the framework is implemented JPA (Java Persistence API)<br />
 
 3 - Using a Terminal or a Customer Git, do the clone within your workspace.
 
-3.1 - cd ~/workspace/
+	cd ~/workspace/
 
-3.2 - git clone git@github.com:DiegoSousa/MessengerConcurrent.git
+3.1 - Then
+
+	git clone git@github.com:DiegoSousa/MessengerConcurrent.git
 
 4 - In eclipse go in file -> import -> type in the search above "Existing maven projects" -> next -> Browser -> select the project messengerConcurrent -> Finish.
 
