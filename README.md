@@ -24,26 +24,26 @@ since the framework is implemented JPA (Java Persistence API)<br />
 
 	In Eclipse go in -> Help -> Eclipse MarketPlace -> install AJDT corresponding to your version of eclipse.
 
-<b>2 To install Maven:<b>
+<b>2 - To install Maven:<b>
 
 	In Eclipse go in -> Help -> Eclipse MarketPlace -> install the "Maven Integration for eclipse WTP".
 
 <h1>To correctly import the application just follow the following steps.
 
-<b>3 - Using a Terminal or a Customer Git, do the clone within your workspace.<b>
+<b>1 - Using a Terminal or a Customer Git, do the clone within your workspace.<b>
 
 	cd ~/workspace/
 
-<b>3.1 - Ctrl+C and Ctrl+V in terminal:<b>
+<b>1.1 - Ctrl+C and Ctrl+V in terminal:<b>
 
 	git clone git@github.com:DiegoSousa/MessengerConcurrent.git
 
-<b>4 - In eclipse go in:<b> 
+<b>2 - In eclipse go in:<b> 
 
 	file -> import -> type in the search above "Existing maven projects" -> next -> Browser -> 
 	select the project messengerConcurrent -> Finish.
 
-<b>4.1 - Wait until the maven download all libraries.<b>
+<b>3 - Wait until the maven download all libraries.<b>
 
 The End!
 
@@ -75,6 +75,10 @@ creating manually using the client PostgreSQL PgAdmin (1.2.2). <b>Choose the one
 
 Open your terminal type:
 
+	chmod +x ./createDatabaseAndTables.sh
+
+Then type:
+
 	cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database -> ENTER -> 
 	chmod +x createDatabaseAndTables.sh -> ./createDatabaseAndTables.sh
 
@@ -88,7 +92,7 @@ Open your terminal type:
 
 <b>Doubts?<b>
 
-<b>Contact diego@diegosousa.com<b>
+<b>Contact diego@diegosousa.com or diego.sousa@dce.ufpb.br<b>
 
 
 <h1>Tutorial Versão em Português:
