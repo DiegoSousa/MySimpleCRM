@@ -92,7 +92,7 @@ Then type:
 
 <b>Doubts?<b>
 
-<b>Contact diego[at]diegosousa[dot]com or diego.sousa[at]dce.ufpb.br<b>
+<b>Contact<b> diego[at]diegosousa[dot]com <b>or<b> diego.sousa[at]dce.ufpb.br
 
 
 
