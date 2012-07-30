@@ -110,7 +110,7 @@ Then type:
 
 	No Eclipse vá em -> Ajuda -> Eclipse MarketPlace -> instale o "Maven Integration for eclipse WTP".
 
-<h1>Para importar corretamente o aplicativo basta seguir os passos seguintes:
+<h1>Para importar corretamente o aplicativo basta seguir os seguintes passos:
 
 <b>1 - Usando um Terminal ou um cliente Git, faça o clone em seu workspace.<b>
 
@@ -127,7 +127,6 @@ Then type:
 
 <b>3 - Aguarde até que o maven faça o download de todas as bibliotecas.<b>
 
-Fim!
 
 <h1>Configurando o projeto:
 
@@ -150,7 +149,7 @@ Fim!
 
 	http://www.pgadmin.org/download/
 
-<b>1.2 - Existe duas formas de criar a base de dados. Usando o script Shell de creação (1.2.1) ou
+<b>1.2 - Existe duas formas de criar a base de dados. Usando o script Shell de criação (1.2.1) ou
 criando manualmente usando o cliente PostgreSQL PgAdmin (1.2.2). <b>Escolhe a forma que mais lhe agradar.<b>
  
 <b>1.2.1 - "Usando o script de criação"<b> 
@@ -167,7 +166,7 @@ Então digite:
 
 	./createDatabase.sh
 
-<b>1.2.2 - Creando manualmente, usando o cliente PostgreSQL PgAdmin:<b>
+<b>1.2.2 - Criando manualmente, usando o cliente PostgreSQL PgAdmin:<b>
 
 	Crie a Base de Dados com o nome "messengerConcurrent" e set o "Login Role" default do PostgreSQL, 
 	que contém o login e o password igual a 'postgres'.
@@ -178,87 +177,3 @@ Então digite:
 <b>Duvidas?<b>
 
 <b>Contato:</b> diego[at]diegosousa[dot]com <b>or</b> diego.sousa[at]dce.ufpb.br
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Requisitos:
-Web Server: Apache Tomcat 7+<br />
-JDK: Version 6+<br />
-IDE: Eclipse Java EE indigo+<br />
-AJDT (AspectJ Development Tools)¹<br />
-Maven: Version 2²<br />
-Banco de Dados: Preferencialmente PostgreSQL, mas é possivel utilizar outros bancos,<br />
-já que está implementado o framework JPA (Java Persistence API)<br />
- 
-<h1>Configurar o Banco de dados:
-
-1 - <b>Instalar o PostgreSQL<b> (http://www.postgresql.org/download/).
-
-2 - Caso ache necessario, poderá instalar o cliente PostgreSQL (http://www.pgadmin.org/download/).
-
-3 - Criar uma base de dados com o nome messengerConcurrent e setar para a base o "Login Role" default do PostgreSQL, que contém login e senha 'postgres'.
-
-<h1>Configurar o eclipse:
-  
-<b>1 - Para instalar o Ajdt:<b>
-
-1.1 - Help -> Eclipse MarketPlace -> instale o ajdt correspondente a sua versão do eclipse.
-
-<b>2 - Para instalar o Maven:<b>
-
-2.2 - Help -> Eclipse MarketPlace -> instale o "Maven Integration for eclipse WTP".
-
-<b>3 - Caso não tenha o JUnit 4:
-
-3.1 - Acesse http://www.junit.org/  faça o download do jar e adicione em /eclipse/plugins.
-
-<b>Vamos ao que interessa!<b>
-
-<h1>Para importar corretamente a aplicação siga exatamente os seguintes passos.
-
-1 - Usando um Terminal ou um Cliente Git, faça o clone dentro do seu workspace.
-
-1.1 - cd workspace
-
-1.2 - git clone git@github.com:DiegoSousa/MessengerConcurrent.git
-
-2 - No eclipse va em file -> import -> Na busca acima procure por "Existing maven projects" -> next -> Browser -> selecione o projeto messengerConcurrent -> Finish.
-
-2.1 - Aguarde até que o maven baixe todas as bibliotecas.
-
-Fim!
-
-<h1>Configurando o projeto:
-
-1 - Vá em MessengerConcurrent -> Properties -> Procure por Java Buid Path -> na aba Libraries -> Add Library -> JUnit -> Next -> Em Junit Library Version digite version4 -> Finish.
-
-2 - Ainda em Properties vá na aba "Source" -> Add Folder -> threadControl_0.3_src -> Marque a opção srcAspectsTC e srcTC.
-
-3 - Ainda em Properties localize "Project Facets" -> marque as opções (java - version 1.6+) e (Dynamic Web Module - version 3.0+) -> OK.
-
-4 - Vá Novamente em MessengerConcurrent -> Configure -> Convert to AspectJ Project.
-
-
-<b>Fim!<b>
-
-<b>Duvidas?<b>
-
-<b>Entre em contato com diego@diegosousa.com<b>
-
-[]'s
