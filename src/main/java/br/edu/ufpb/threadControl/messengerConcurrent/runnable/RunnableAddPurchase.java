@@ -27,7 +27,9 @@ public class RunnableAddPurchase implements Runnable {
 		try {
 			iPurchaseManager.addPurchase(purchase);
 		} catch (Exception e) {
+			System.out.println("Aquiii");
 			e.printStackTrace();
+			
 		}
 	}
 

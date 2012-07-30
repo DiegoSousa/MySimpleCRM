@@ -62,7 +62,7 @@ import br.edu.ufpb.threadControl.messengerConcurrent.util.HibernateUtil;
 
 /**
  * Class used to test the facade, which contains all the application methods.
- *
+ * 
  * Note: This class uses the framework JPA / Hibernate for persistence and
  * constant "ALL_THREADS_TO_BE_IN_STATE" Attribute that has the function to
  * count the active threads.
@@ -165,11 +165,11 @@ public class FacadeTestJpaWithConstant {
 		Customer customerAuxOne = null;
 		Customer customerAuxTwo = null;
 		Customer customerAuxThree = null;
-		Customer customer1 = new Customer("Diego", "111", "3422-1048",
+		Customer customer1 = new Customer("Diego", "07278910112", "3422-1010",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
-		Customer customer2 = new Customer("Ayla", "222", "3422-1049",
+		Customer customer2 = new Customer("Ayla", "07278910113", "3422-1011",
 				"ayla@dce.ufpb.br", "S3cr3t2", 18, 11, 1988);
-		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
+		Customer customer3 = new Customer("Kawe", "07278910114", "3422-1012",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// Add Customer
 		threadControl.prepare(getAddCustomerFinishedState());
@@ -191,11 +191,17 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals(3, currentObjectsList.size());
+		assertTrue(currentObjectsList.contains(customer1));
+		assertTrue(currentObjectsList.contains(customer2));
+		assertTrue(currentObjectsList.contains(customer3));
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("111", takerClientList);
+		facade.searchCustomerByCpf("07278910112", takerClientList);
 
 		try {
 			customerAuxOne = takerClientList.take();
@@ -204,10 +210,14 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("diego.sousa@dce.ufpb.br", customerAuxOne.getLogin());
+		assertEquals("S3cr3t", customerAuxOne.getPassword());
+
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("222", takerClientList);
+		facade.searchCustomerByCpf("07278910113", takerClientList);
 
 		try {
 			customerAuxTwo = takerClientList.take();
@@ -216,11 +226,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t2", customerAuxTwo.getPassword());
+		assertEquals("3422-1011", customerAuxTwo.getPhone());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("333", takerClientList);
+		facade.searchCustomerByCpf("07278910114", takerClientList);
 
 		try {
 			customerAuxThree = takerClientList.take();
@@ -229,10 +243,14 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t3", customerAuxThree.getPassword());
+		assertEquals("3422-1012", customerAuxThree.getPhone());
 		assertTrue(currentObjectsList.contains(customerAuxOne));
 		assertTrue(currentObjectsList.contains(customerAuxTwo));
 		assertTrue(currentObjectsList.contains(customerAuxThree));
 		assertEquals(3, currentObjectsList.size());
+
 		threadControl.proceed();
 	}
 
@@ -249,11 +267,11 @@ public class FacadeTestJpaWithConstant {
 		Customer customerAuxTwo = null;
 		Customer customerAuxThree = null;
 
-		Customer customer1 = new Customer("Diego", "111", "3422-1048",
+		Customer customer1 = new Customer("Diego", "07278910112", "3422-1010",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
-		Customer customer2 = new Customer("Ayla", "222", "3422-1049",
+		Customer customer2 = new Customer("Ayla", "07278910113", "3422-1011",
 				"ayla@dce.ufpb.br", "S3cr3t2", 18, 11, 1988);
-		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
+		Customer customer3 = new Customer("Kawe", "07278910114", "3422-1012",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// AddCustomer
 		threadControl.prepare(getAddCustomerFinishedState());
@@ -275,11 +293,17 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals(3, currentObjectsList.size());
+		assertTrue(currentObjectsList.contains(customer1));
+		assertTrue(currentObjectsList.contains(customer2));
+		assertTrue(currentObjectsList.contains(customer3));
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("111", takerClientList);
+		facade.searchCustomerByCpf("07278910112", takerClientList);
 
 		try {
 			customerAuxOne = takerClientList.take();
@@ -288,11 +312,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t", customerAuxOne.getPassword());
+		assertEquals("3422-1010", customerAuxOne.getPhone());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("222", takerClientList);
+		facade.searchCustomerByCpf("07278910113", takerClientList);
 
 		try {
 			customerAuxTwo = takerClientList.take();
@@ -301,11 +329,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t2", customerAuxTwo.getPassword());
+		assertEquals("3422-1011", customerAuxTwo.getPhone());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("333", takerClientList);
+		facade.searchCustomerByCpf("07278910114", takerClientList);
 
 		try {
 			customerAuxThree = takerClientList.take();
@@ -314,10 +346,14 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t3", customerAuxThree.getPassword());
+		assertEquals("3422-1012", customerAuxThree.getPhone());
 		assertTrue(currentObjectsList.contains(customerAuxOne));
 		assertTrue(currentObjectsList.contains(customerAuxTwo));
 		assertTrue(currentObjectsList.contains(customerAuxThree));
 		assertEquals(3, currentObjectsList.size());
+
 		// Removing Customer
 		threadControl.prepare(getRemoveCustomerFinishedState());
 		threadControl.proceed();
@@ -358,11 +394,11 @@ public class FacadeTestJpaWithConstant {
 		Customer customerAuxTwo = null;
 		Customer customerAuxThree = null;
 
-		Customer customer1 = new Customer("Diego", "111", "3422-1048",
+		Customer customer1 = new Customer("Diego", "07278910112", "3422-1010",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
-		Customer customer2 = new Customer("Ayla", "222", "3422-1049",
+		Customer customer2 = new Customer("Ayla", "07278910113", "3422-1011",
 				"ayla@dce.ufpb.br", "S3cr3t2", 18, 11, 1988);
-		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
+		Customer customer3 = new Customer("Kawe", "07278910114", "3422-1012",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 
 		threadControl.prepare(getAddCustomerFinishedState());
@@ -384,11 +420,17 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals(3, currentObjectsList.size());
+		assertTrue(currentObjectsList.contains(customer1));
+		assertTrue(currentObjectsList.contains(customer2));
+		assertTrue(currentObjectsList.contains(customer3));
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("111", takerClientList);
+		facade.searchCustomerByCpf("07278910112", takerClientList);
 
 		try {
 			customerAuxOne = takerClientList.take();
@@ -397,11 +439,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t", customerAuxOne.getPassword());
+		assertEquals("3422-1010", customerAuxOne.getPhone());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("222", takerClientList);
+		facade.searchCustomerByCpf("07278910113", takerClientList);
 
 		try {
 			customerAuxTwo = takerClientList.take();
@@ -410,11 +456,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t2", customerAuxTwo.getPassword());
+		assertEquals("3422-1011", customerAuxTwo.getPhone());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("333", takerClientList);
+		facade.searchCustomerByCpf("07278910114", takerClientList);
 
 		try {
 			customerAuxThree = takerClientList.take();
@@ -423,10 +473,14 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t3", customerAuxThree.getPassword());
+		assertEquals("3422-1012", customerAuxThree.getPhone());
 		assertTrue(currentObjectsList.contains(customerAuxOne));
 		assertTrue(currentObjectsList.contains(customerAuxTwo));
 		assertTrue(currentObjectsList.contains(customerAuxThree));
 		assertEquals(3, currentObjectsList.size());
+
 		// removing the list of customer
 		threadControl.prepare(getRemoveCustomerFinishedState());
 		threadControl.proceed();
@@ -449,13 +503,16 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
 		assertFalse(currentObjectsList.contains(customerAuxOne));
+		assertFalse(currentObjectsList.contains(customerAuxTwo));
 		assertTrue(currentObjectsList.contains(customerAuxThree));
 		assertEquals(1, currentObjectsList.size());
+
 		// Restoring Customer
 		threadControl.prepare(getRestoreCustomerFinishedState());
 		threadControl.proceed();
-		facade.restoreCustomer("111");
+		facade.restoreCustomer("07278910112");
 		copyListOfAllCustomer.clear();
 		threadControl.waitUntilStateIsReached();
 		// getting the list of customer
@@ -472,6 +529,8 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 		assertTrue(currentObjectsList.contains(customerAuxOne));
+		assertFalse(currentObjectsList.contains(customerAuxTwo));
+		assertTrue(currentObjectsList.contains(customerAuxThree));
 		assertEquals(2, currentObjectsList.size());
 		threadControl.proceed();
 	}
@@ -488,11 +547,11 @@ public class FacadeTestJpaWithConstant {
 		Customer customerAuxTwo = null;
 		Customer customerAuxThree = null;
 
-		Customer customer1 = new Customer("Diego", "111", "3422-1048",
+		Customer customer1 = new Customer("Diego", "07278910112", "3422-1010",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
-		Customer customer2 = new Customer("Ayla", "222", "3422-1049",
+		Customer customer2 = new Customer("Ayla", "07278910113", "3422-1011",
 				"ayla@dce.ufpb.br", "S3cr3t2", 18, 11, 1988);
-		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
+		Customer customer3 = new Customer("Kawe", "07278910114", "3422-1012",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// Add customer
 		threadControl.prepare(getAddCustomerFinishedState());
@@ -514,11 +573,17 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals(3, currentObjectsList.size());
+		assertTrue(currentObjectsList.contains(customer1));
+		assertTrue(currentObjectsList.contains(customer2));
+		assertTrue(currentObjectsList.contains(customer3));
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("111", takerClientList);
+		facade.searchCustomerByCpf("07278910112", takerClientList);
 
 		try {
 			customerAuxOne = takerClientList.take();
@@ -527,10 +592,14 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t", customerAuxOne.getPassword());
+		assertEquals("3422-1010", customerAuxOne.getPhone());
+
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("222", takerClientList);
+		facade.searchCustomerByCpf("07278910113", takerClientList);
 
 		try {
 			customerAuxTwo = takerClientList.take();
@@ -539,11 +608,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t2", customerAuxTwo.getPassword());
+		assertEquals("3422-1011", customerAuxTwo.getPhone());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("333", takerClientList);
+		facade.searchCustomerByCpf("07278910114", takerClientList);
 
 		try {
 			customerAuxThree = takerClientList.take();
@@ -552,17 +625,21 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t3", customerAuxThree.getPassword());
+		assertEquals("3422-1012", customerAuxThree.getPhone());
 		assertTrue(currentObjectsList.contains(customerAuxOne));
 		assertTrue(currentObjectsList.contains(customerAuxTwo));
 		assertTrue(currentObjectsList.contains(customerAuxThree));
 		assertEquals(3, currentObjectsList.size());
+
 		// Editing customer
 		threadControl.prepare(getEditCustomerFinishedState());
 		threadControl.proceed();
 
 		customerAuxOne.setName("Ewerton");
-		customerAuxTwo.setCpf("555");
-		customerAuxThree.setPhone("2222-2222");
+		customerAuxTwo.setCpf("07278910115");
+		customerAuxThree.setPhone("3422-1013");
 
 		facade.editCustomer(customerAuxOne);
 		facade.editCustomer(customerAuxTwo);
@@ -573,7 +650,7 @@ public class FacadeTestJpaWithConstant {
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("111", takerClientList);
+		facade.searchCustomerByCpf("07278910112", takerClientList);
 
 		try {
 			customerAuxOne = takerClientList.take();
@@ -582,11 +659,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t", customerAuxOne.getPassword());
+		assertEquals("3422-1010", customerAuxOne.getPhone());
+
 		// getting customer
-		threadControl.prepare(getSearchCustomerByCpfFinishedState());
+		threadControl.prepare(getRemoveCustomerFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("555", takerClientList);
+		facade.searchCustomerByCpf("07278910115", takerClientList);
 
 		try {
 			customerAuxTwo = takerClientList.take();
@@ -595,11 +676,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t2", customerAuxTwo.getPassword());
+		assertEquals("3422-1011", customerAuxTwo.getPhone());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("333", takerClientList);
+		facade.searchCustomerByCpf("07278910114", takerClientList);
 
 		try {
 			customerAuxThree = takerClientList.take();
@@ -608,9 +693,12 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t3", customerAuxThree.getPassword());
 		assertEquals("Ewerton".toUpperCase(), customerAuxOne.getName());
-		assertEquals("555", customerAuxTwo.getCpf());
-		assertEquals("2222-2222", customerAuxThree.getPhone());
+		assertEquals("07278910115", customerAuxTwo.getCpf());
+		assertEquals("3422-1013", customerAuxThree.getPhone());
+
 		threadControl.proceed();
 	}
 
@@ -624,7 +712,7 @@ public class FacadeTestJpaWithConstant {
 		Customer customerAuxOne = null;
 		Customer customerAuxTwo = null;
 
-		Customer customer1 = new Customer("Diego", "111", "3422-1048",
+		Customer customer1 = new Customer("Diego", "07278910112", "3422-1010",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
 		// add customer
 		threadControl.prepare(getAddCustomerFinishedState());
@@ -633,7 +721,7 @@ public class FacadeTestJpaWithConstant {
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
-		facade.searchCustomerByCpf("111", takerClientList);
+		facade.searchCustomerByCpf("07278910112", takerClientList);
 
 		try {
 			customerAuxOne = takerClientList.take();
@@ -642,7 +730,10 @@ public class FacadeTestJpaWithConstant {
 		}
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals("S3cr3t", customerAuxOne.getPassword());
+		assertEquals("3422-1010", customerAuxOne.getPhone());
 		assertEquals("diego.sousa@dce.ufpb.br", customerAuxOne.getLogin());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByIdFinishedState());
 		threadControl.proceed();
@@ -656,9 +747,12 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t", customerAuxTwo.getPassword());
+		assertEquals("3422-1010", customerAuxTwo.getPhone());
 		assertEquals("diego.sousa@dce.ufpb.br", customerAuxTwo.getLogin());
 		assertEquals("Diego".toUpperCase(), customerAuxTwo.getName());
-		assertEquals("111", customerAuxTwo.getCpf());
+		assertEquals("07278910112", customerAuxTwo.getCpf());
 		assertFalse(customerAuxTwo.getLogin() == "diego@diegosousa.com");
 
 		threadControl.proceed();
@@ -675,7 +769,7 @@ public class FacadeTestJpaWithConstant {
 
 		Customer customerAuxOne = null;
 
-		Customer customer1 = new Customer("Diego", "111", "3422-1048",
+		Customer customer1 = new Customer("Diego", "07278910112", "3422-1010",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
 		// add Customer
 		threadControl.prepare(getAddCustomerFinishedState());
@@ -691,9 +785,13 @@ public class FacadeTestJpaWithConstant {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals("S3cr3t", customerAuxOne.getPassword());
+		assertEquals("3422-1010", customerAuxOne.getPhone());
 		assertEquals("diego.sousa@dce.ufpb.br", customerAuxOne.getLogin());
+
 		threadControl.proceed();
 
 	}
@@ -708,7 +806,7 @@ public class FacadeTestJpaWithConstant {
 
 		Customer customerAuxOne = null;
 
-		Customer customer1 = new Customer("Diego", "111", "3422-1048",
+		Customer customer1 = new Customer("Diego", "07278910112", "3422-1010",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
 		// add Customer
 		threadControl.prepare(getAddCustomerFinishedState());
@@ -717,7 +815,7 @@ public class FacadeTestJpaWithConstant {
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
-		facade.searchCustomerByCpf("111", takerClientList);
+		facade.searchCustomerByCpf("07278910112", takerClientList);
 
 		try {
 			customerAuxOne = takerClientList.take();
@@ -726,7 +824,10 @@ public class FacadeTestJpaWithConstant {
 		}
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals("S3cr3t", customerAuxOne.getPassword());
+		assertEquals("3422-1010", customerAuxOne.getPhone());
 		assertEquals("diego.sousa@dce.ufpb.br", customerAuxOne.getLogin());
+
 		threadControl.proceed();
 
 	}
@@ -745,11 +846,11 @@ public class FacadeTestJpaWithConstant {
 		Customer customerAuxThree = null;
 		Customer customerAuxFour = null;
 
-		Customer customer1 = new Customer("Diego", "111", "3422-1048",
+		Customer customer1 = new Customer("Diego", "07278910112", "3422-1010",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
-		Customer customer2 = new Customer("Ayla", "222", "3422-1049",
+		Customer customer2 = new Customer("Ayla", "07278910113", "3422-1011",
 				"ayla@dce.ufpb.br", "S3cr3t2", 18, 11, 1988);
-		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
+		Customer customer3 = new Customer("Kawe", "07278910114", "3422-1012",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// Add Customer
 		threadControl.prepare(getAddCustomerFinishedState());
@@ -771,11 +872,17 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals(3, currentObjectsList.size());
+		assertTrue(currentObjectsList.contains(customer1));
+		assertTrue(currentObjectsList.contains(customer2));
+		assertTrue(currentObjectsList.contains(customer3));
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("111", takerClientList);
+		facade.searchCustomerByCpf("07278910112", takerClientList);
 
 		try {
 			customerAuxOne = takerClientList.take();
@@ -784,11 +891,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t", customerAuxOne.getPassword());
+		assertEquals("3422-1010", customerAuxOne.getPhone());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("222", takerClientList);
+		facade.searchCustomerByCpf("07278910113", takerClientList);
 
 		try {
 			customerAuxTwo = takerClientList.take();
@@ -797,11 +908,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t2", customerAuxTwo.getPassword());
+		assertEquals("3422-1011", customerAuxTwo.getPhone());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("333", takerClientList);
+		facade.searchCustomerByCpf("07278910114", takerClientList);
 
 		try {
 			customerAuxThree = takerClientList.take();
@@ -810,11 +925,16 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t3", customerAuxThree.getPassword());
+		assertEquals("3422-1012", customerAuxThree.getPhone());
 		assertTrue(currentObjectsList.contains(customerAuxOne));
 		assertTrue(currentObjectsList.contains(customerAuxTwo));
 		assertTrue(currentObjectsList.contains(customerAuxThree));
 		assertFalse(currentObjectsList.contains(customerAuxFour));
 		assertEquals(3, currentObjectsList.size());
+
+		threadControl.proceed();
 
 	}
 
@@ -855,6 +975,11 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsList.contains(product1));
+		assertTrue(currentObjectsList.contains(product2));
+		assertTrue(currentObjectsList.contains(product3));
+		assertEquals(3, currentObjectsList.size());
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -867,6 +992,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -878,6 +1007,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -891,10 +1024,13 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
 		assertTrue(currentObjectsList.contains(productAuxOne));
 		assertTrue(currentObjectsList.contains(productAuxTwo));
 		assertTrue(currentObjectsList.contains(productAuxThree));
 		assertEquals(3, currentObjectsList.size());
+
 		threadControl.proceed();
 
 	}
@@ -936,6 +1072,11 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsList.contains(product1));
+		assertTrue(currentObjectsList.contains(product2));
+		assertTrue(currentObjectsList.contains(product3));
+		assertEquals(3, currentObjectsList.size());
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -948,6 +1089,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -959,6 +1104,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -972,6 +1121,8 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
 		assertTrue(currentObjectsList.contains(productAuxOne));
 		assertTrue(currentObjectsList.contains(productAuxTwo));
 		assertTrue(currentObjectsList.contains(productAuxThree));
@@ -997,9 +1148,11 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
 		assertFalse(currentObjectsList.contains(productAuxOne));
 		assertTrue(currentObjectsList.contains(productAuxThree));
 		assertEquals(1, currentObjectsList.size());
+
 		threadControl.proceed();
 	}
 
@@ -1040,6 +1193,11 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsList.contains(product1));
+		assertTrue(currentObjectsList.contains(product2));
+		assertTrue(currentObjectsList.contains(product3));
+		assertEquals(3, currentObjectsList.size());
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1052,6 +1210,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1063,6 +1225,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1076,6 +1242,8 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
 		assertTrue(currentObjectsList.contains(productAuxOne));
 		assertTrue(currentObjectsList.contains(productAuxTwo));
 		assertTrue(currentObjectsList.contains(productAuxThree));
@@ -1101,6 +1269,7 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
 		assertFalse(currentObjectsList.contains(productAuxOne));
 		assertTrue(currentObjectsList.contains(productAuxThree));
 		assertEquals(1, currentObjectsList.size());
@@ -1123,8 +1292,11 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
 		assertTrue(currentObjectsList.contains(productAuxOne));
+		assertTrue(currentObjectsList.contains(productAuxThree));
 		assertEquals(2, currentObjectsList.size());
+
 		threadControl.proceed();
 
 	}
@@ -1166,6 +1338,11 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsList.contains(product1));
+		assertTrue(currentObjectsList.contains(product2));
+		assertTrue(currentObjectsList.contains(product3));
+		assertEquals(3, currentObjectsList.size());
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1178,6 +1355,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1189,6 +1370,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1202,6 +1387,8 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
 		assertTrue(currentObjectsList.contains(productAuxOne));
 		assertTrue(currentObjectsList.contains(productAuxTwo));
 		assertTrue(currentObjectsList.contains(productAuxThree));
@@ -1211,7 +1398,7 @@ public class FacadeTestJpaWithConstant {
 		threadControl.proceed();
 
 		productAuxOne.setName("Sony Vaio");
-		productAuxTwo.setPrice(1500.00);
+		productAuxTwo.setPrice(150000.00);
 		productAuxThree.setQuantity(100);
 
 		facade.editProduct(productAuxOne);
@@ -1231,6 +1418,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("Sony Vaio".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1242,6 +1433,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 150000.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1254,9 +1449,13 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
 		assertEquals("Sony Vaio".toUpperCase(), productAuxOne.getName());
-		assertTrue(productAuxTwo.getPrice() == 1500.00);
+		assertTrue(productAuxTwo.getPrice() == 150000.00);
 		assertEquals(100, productAuxThree.getQuantity());
+
 		threadControl.proceed();
 
 	}
@@ -1298,6 +1497,11 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsList.contains(product1));
+		assertTrue(currentObjectsList.contains(product2));
+		assertTrue(currentObjectsList.contains(product3));
+		assertEquals(3, currentObjectsList.size());
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1310,6 +1514,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1321,6 +1529,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1333,6 +1545,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
+
 		threadControl.prepare(getSearchProductByIdFinishedState());
 
 		facade.searchProductById(productAuxOne.getId(), takerProductList);
@@ -1344,6 +1560,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByIdFinishedState());
 
 		facade.searchProductById(productAuxTwo.getId(), takerProductList);
@@ -1355,6 +1575,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByIdFinishedState());
 
 		facade.searchProductById(productAuxThree.getId(), takerProductList);
@@ -1367,6 +1591,8 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
 		assertTrue(currentObjectsList.contains(productAuxOne));
 		assertTrue(currentObjectsList.contains(productAuxTwo));
 		assertTrue(currentObjectsList.contains(productAuxThree));
@@ -1412,6 +1638,11 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsList.contains(product1));
+		assertTrue(currentObjectsList.contains(product2));
+		assertTrue(currentObjectsList.contains(product3));
+		assertEquals(3, currentObjectsList.size());
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1424,6 +1655,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1435,6 +1670,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1448,6 +1687,8 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
 		assertTrue(currentObjectsList.contains(productAuxOne));
 		assertTrue(currentObjectsList.contains(productAuxTwo));
 		assertTrue(currentObjectsList.contains(productAuxThree));
@@ -1465,7 +1706,6 @@ public class FacadeTestJpaWithConstant {
 	public void testGetListProduct() {
 
 		List<Product> currentObjectsList = null;
-		Product productAuxOne = null;
 
 		Product product1 = new Product("IPod", 1200.00, 100);
 		Product product2 = new Product("IPhone", 2200.00, 200);
@@ -1490,20 +1730,12 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertTrue(currentObjectsList.contains(product1));
+		assertTrue(currentObjectsList.contains(product2));
+		assertTrue(currentObjectsList.contains(product3));
 		assertEquals(3, currentObjectsList.size());
-		threadControl.prepare(getSearchProductByNameFinishedState());
-		threadControl.proceed();
 
-		facade.searchProductByName("IPod", takerProductList);
-
-		try {
-			productAuxOne = takerProductList.take();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		threadControl.waitUntilStateIsReached();
-		assertTrue(currentObjectsList.contains(productAuxOne));
 		threadControl.proceed();
 
 	}
@@ -1546,6 +1778,11 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsListProduct.contains(product1));
+		assertTrue(currentObjectsListProduct.contains(product2));
+		assertTrue(currentObjectsListProduct.contains(product3));
+		assertEquals(3, currentObjectsListProduct.size());
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1558,6 +1795,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1569,6 +1810,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1581,6 +1826,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
+
 		// Add Promotion
 		List<Promotion> currentObjectsListPromotion = null;
 		Promotion promotionAuxOne = null;
@@ -1596,7 +1845,7 @@ public class FacadeTestJpaWithConstant {
 		listProductTwo.add(productAuxThree);
 
 		Promotion promotion1 = new Promotion("Promoção Apple", listProductTwo,
-				50, 30);
+				5000, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProductOne, 3000, 30);
 
@@ -1620,6 +1869,10 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsListPromotion.contains(promotion1));
+		assertTrue(currentObjectsListPromotion.contains(promotion2));
+		assertEquals(2, currentObjectsListPromotion.size());
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -1632,6 +1885,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("Promoção Apple".toUpperCase(), promotionAuxOne.getName());
+		assertTrue(promotionAuxOne.getQuantityProductPromotion() == 30);
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -1644,6 +1901,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("Promotion Apple Combo".toUpperCase(),
+				promotionAuxTwo.getName());
+		assertTrue(promotionAuxTwo.getQuantityProductPromotion() == 30);
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxOne));
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxTwo));
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxThree));
@@ -1688,6 +1949,11 @@ public class FacadeTestJpaWithConstant {
 		}
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsListProduct.contains(product1));
+		assertTrue(currentObjectsListProduct.contains(product2));
+		assertTrue(currentObjectsListProduct.contains(product3));
+		assertEquals(3, currentObjectsListProduct.size());
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1699,6 +1965,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1710,6 +1980,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1721,6 +1995,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
+
 		// Add Promotion
 		List<Promotion> currentObjectsListPromotion = null;
 		Promotion promotionAuxOne = null;
@@ -1736,7 +2014,7 @@ public class FacadeTestJpaWithConstant {
 		listProductTwo.add(productAuxThree);
 
 		Promotion promotion1 = new Promotion("Promoção Apple", listProductTwo,
-				50, 30);
+				5000, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 		threadControl.prepare(getAddPromotionFinishedState());
@@ -1758,6 +2036,11 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertTrue(currentObjectsListPromotion.contains(promotion1));
+		assertTrue(currentObjectsListPromotion.contains(promotion2));
+		assertEquals(2, currentObjectsListPromotion.size());
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -1770,6 +2053,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("Promoção Apple".toUpperCase(), promotionAuxOne.getName());
+		assertTrue(promotionAuxOne.getQuantityProductPromotion() == 30);
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -1782,10 +2069,14 @@ public class FacadeTestJpaWithConstant {
 		}
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals("Promotion Apple Combo".toUpperCase(),
+				promotionAuxTwo.getName());
+		assertTrue(promotionAuxTwo.getQuantityProductPromotion() == 30);
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxOne));
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxTwo));
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxThree));
 		assertEquals(3, currentObjectsListProduct.size());
+
 		// Remove Promotion
 		threadControl.prepare(getRemovePromotionFinishedState());
 		threadControl.proceed();
@@ -1802,8 +2093,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxOne));
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxTwo));
+		assertEquals(1, currentObjectsListPromotion.size());
 
 		threadControl.proceed();
 	}
@@ -1846,6 +2139,11 @@ public class FacadeTestJpaWithConstant {
 		}
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsListProduct.contains(product1));
+		assertTrue(currentObjectsListProduct.contains(product2));
+		assertTrue(currentObjectsListProduct.contains(product3));
+		assertEquals(3, currentObjectsListProduct.size());
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1857,6 +2155,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1868,6 +2170,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -1879,6 +2185,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
+
 		// Add Promotion
 		List<Promotion> currentObjectsListPromotion = null;
 		Promotion promotionAuxOne = null;
@@ -1894,7 +2204,7 @@ public class FacadeTestJpaWithConstant {
 		listProductTwo.add(productAuxThree);
 
 		Promotion promotion1 = new Promotion("Promoção Apple", listProductTwo,
-				50, 30);
+				5000, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 		threadControl.prepare(getAddPromotionFinishedState());
@@ -1916,6 +2226,11 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertTrue(currentObjectsListPromotion.contains(promotion1));
+		assertTrue(currentObjectsListPromotion.contains(promotion2));
+		assertEquals(2, currentObjectsListPromotion.size());
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -1928,6 +2243,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("Promoção Apple".toUpperCase(), promotionAuxOne.getName());
+		assertTrue(promotionAuxOne.getQuantityProductPromotion() == 30);
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -1940,10 +2259,14 @@ public class FacadeTestJpaWithConstant {
 		}
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals("Promotion Apple Combo".toUpperCase(),
+				promotionAuxTwo.getName());
+		assertTrue(promotionAuxTwo.getQuantityProductPromotion() == 30);
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxOne));
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxTwo));
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxThree));
 		assertEquals(3, currentObjectsListProduct.size());
+
 		// removePromotion
 		threadControl.prepare(getRemovePromotionFinishedState());
 		threadControl.proceed();
@@ -1960,8 +2283,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxOne));
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxTwo));
+		assertEquals(1, currentObjectsListPromotion.size());
 
 		threadControl.prepare(getRestorePromotionFinishedState());
 		threadControl.proceed();
@@ -1979,9 +2304,13 @@ public class FacadeTestJpaWithConstant {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
 		threadControl.waitUntilStateIsReached();
+
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxOne));
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxTwo));
+		assertEquals(2, currentObjectsListPromotion.size());
+
 		threadControl.proceed();
 
 	}
@@ -2024,6 +2353,11 @@ public class FacadeTestJpaWithConstant {
 		}
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsListProduct.contains(product1));
+		assertTrue(currentObjectsListProduct.contains(product2));
+		assertTrue(currentObjectsListProduct.contains(product3));
+		assertEquals(3, currentObjectsListProduct.size());
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2035,6 +2369,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2046,6 +2384,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2057,6 +2399,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
+
 		// Add Promotion
 		List<Promotion> currentObjectsListPromotion = null;
 		Promotion promotionAuxOne = null;
@@ -2072,7 +2418,7 @@ public class FacadeTestJpaWithConstant {
 		listProductTwo.add(productAuxThree);
 
 		Promotion promotion1 = new Promotion("Promoção Apple", listProductTwo,
-				50, 30);
+				5000, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 		threadControl.prepare(getAddPromotionFinishedState());
@@ -2094,6 +2440,11 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertTrue(currentObjectsListPromotion.contains(promotion1));
+		assertTrue(currentObjectsListPromotion.contains(promotion2));
+		assertEquals(2, currentObjectsListPromotion.size());
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -2106,6 +2457,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("Promoção Apple".toUpperCase(), promotionAuxOne.getName());
+		assertTrue(promotionAuxOne.getQuantityProductPromotion() == 30);
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -2118,6 +2473,9 @@ public class FacadeTestJpaWithConstant {
 		}
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals("Promotion Apple Combo".toUpperCase(),
+				promotionAuxTwo.getName());
+		assertTrue(promotionAuxTwo.getQuantityProductPromotion() == 30);
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxOne));
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxTwo));
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxThree));
@@ -2187,6 +2545,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2198,6 +2560,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2209,6 +2575,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
+
 		// Add Promotion
 		Promotion promotionAuxOne = null;
 		List<Product> listProduct = new ArrayList<Product>();
@@ -2220,7 +2590,7 @@ public class FacadeTestJpaWithConstant {
 		listProductTwo.add(productAuxThree);
 
 		Promotion promotion1 = new Promotion("Promoção Apple", listProductTwo,
-				50, 30);
+				5000, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 		threadControl.prepare(getAddPromotionFinishedState());
@@ -2243,7 +2613,7 @@ public class FacadeTestJpaWithConstant {
 		threadControl.waitUntilStateIsReached();
 
 		assertEquals("Promoção Apple".toUpperCase(), promotionAuxOne.getName());
-		assertTrue(promotionAuxOne.getPromotionalPrice() == 50);
+		assertTrue(promotionAuxOne.getPromotionalPrice() == 5000);
 		threadControl.proceed();
 
 	}
@@ -2283,6 +2653,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2294,6 +2668,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2305,6 +2683,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
+
 		// Add Promotion
 		Promotion promotionAuxOne = null;
 		List<Product> listProduct = new ArrayList<Product>();
@@ -2316,7 +2698,7 @@ public class FacadeTestJpaWithConstant {
 		listProductTwo.add(productAuxThree);
 
 		Promotion promotion1 = new Promotion("Promoção Apple", listProductTwo,
-				50, 30);
+				5000, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 		threadControl.prepare(getAddPromotionFinishedState());
@@ -2339,7 +2721,7 @@ public class FacadeTestJpaWithConstant {
 		threadControl.waitUntilStateIsReached();
 
 		assertEquals("Promoção Apple".toUpperCase(), promotionAuxOne.getName());
-		assertTrue(promotionAuxOne.getPromotionalPrice() == 50);
+		assertTrue(promotionAuxOne.getPromotionalPrice() == 5000);
 		threadControl.proceed();
 	}
 
@@ -2378,6 +2760,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2389,6 +2775,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2400,6 +2790,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
+
 		// Add Promotion
 		List<Promotion> listPromotions = null;
 		List<Product> listProduct = new ArrayList<Product>();
@@ -2411,7 +2805,7 @@ public class FacadeTestJpaWithConstant {
 		listProductTwo.add(productAuxThree);
 
 		Promotion promotion1 = new Promotion("Promoção Apple", listProductTwo,
-				50, 30);
+				5000, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 		threadControl.prepare(getAddPromotionFinishedState());
@@ -2434,8 +2828,9 @@ public class FacadeTestJpaWithConstant {
 		threadControl.waitUntilStateIsReached();
 
 		assertEquals(2, listPromotions.size());
-		assertEquals("Promoção Apple".toUpperCase(), listPromotions.get(0)
-				.getName());
+		assertTrue(listPromotions.contains(promotion1));
+		assertTrue(listPromotions.contains(promotion2));
+
 		threadControl.proceed();
 
 	}
@@ -2475,6 +2870,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2486,6 +2885,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2497,6 +2900,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
+
 		// Add Promotion
 		Promotion promotionAuxOne = null;
 		List<Promotion> listPromotions = null;
@@ -2509,7 +2916,7 @@ public class FacadeTestJpaWithConstant {
 		listProductTwo.add(productAuxThree);
 
 		Promotion promotion1 = new Promotion("Promoção Apple", listProductTwo,
-				50, 30);
+				5000, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 		threadControl.prepare(getAddPromotionFinishedState());
@@ -2532,6 +2939,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("Promotion Apple Combo".toUpperCase(),
+				promotionAuxOne.getName());
+		assertTrue(promotionAuxOne.getQuantityProductPromotion() == 30);
 
 		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
@@ -2559,25 +2970,29 @@ public class FacadeTestJpaWithConstant {
 	@Test
 	public void testAddPurchaseProduct() {
 
+		/*------------Starting operations of the customer------------*/
+
 		List<Customer> currentObjectsListCustomer = null;
+
 		Customer customerAuxOne = null;
 		Customer customerAuxTwo = null;
 		Customer customerAuxThree = null;
 
-		Customer customer1 = new Customer("Diego", "111", "3422-1048",
+		Customer customer1 = new Customer("Diego", "07278910112", "3422-1010",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
-		Customer customer2 = new Customer("Ayla", "222", "3422-1049",
-				"ayla@dce.ufpb.br", "S3cr3t2", 18, 11, 1988);
-		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
-				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
+		Customer customer2 = new Customer("Ayla", "07278910113", "3422-1011",
+				"ayla@dce.ufpb.br", "S3cr3t2", 19, 12, 1989);
+		Customer customer3 = new Customer("Kawe", "07278910114", "3422-1012",
+				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 20, 01, 1990);
+
 		// Add Customer
 		threadControl.prepare(getAddCustomerFinishedState());
 		facade.addCustomer(customer1);
 		facade.addCustomer(customer2);
 		facade.addCustomer(customer3);
-
 		threadControl.waitUntilStateIsReached();
-		// getting the list of customer
+
+		// Getting the list of customers
 		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
 
@@ -2590,11 +3005,17 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		// getting customer
+
+		assertEquals(3, currentObjectsListCustomer.size());
+		assertTrue(currentObjectsListCustomer.contains(customer1));
+		assertTrue(currentObjectsListCustomer.contains(customer2));
+		assertTrue(currentObjectsListCustomer.contains(customer3));
+
+		// getting customer by CPF
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("111", takerClientList);
+		facade.searchCustomerByCpf("07278910112", takerClientList);
 
 		try {
 			customerAuxOne = takerClientList.take();
@@ -2603,23 +3024,35 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("Diego".toUpperCase(), customerAuxOne.getName());
+		assertFalse(customerAuxOne.getLogin() == "ayla@dce.ufpb.br");
+
+		// getting customer by CPF
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("222", takerClientList);
+		facade.searchCustomerByCpf("07278910113", takerClientList);
 
 		try {
 			customerAuxTwo = takerClientList.take();
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
 		threadControl.waitUntilStateIsReached();
-		// getting customer
+
+		assertEquals("S3cr3t2", customerAuxTwo.getPassword());
+		assertEquals("3422-1011", customerAuxTwo.getPhone());
+		assertEquals("Ayla".toUpperCase(), customerAuxTwo.getName());
+		assertFalse(customerAuxTwo.getLogin() == "diego.sousa@dce.ufpb.br");
+
+		// getting customer by CPF
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("333", takerClientList);
+		facade.searchCustomerByCpf("07278910114", takerClientList);
 
 		try {
 			customerAuxThree = takerClientList.take();
@@ -2628,12 +3061,20 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t3", customerAuxThree.getPassword());
+		assertEquals("3422-1012", customerAuxThree.getPhone());
+		assertEquals("Kawe".toUpperCase(), customerAuxThree.getName());
+		assertFalse(customerAuxThree.getLogin() == "ayla@dce.ufpb.br");
+
 		assertTrue(currentObjectsListCustomer.contains(customerAuxOne));
 		assertTrue(currentObjectsListCustomer.contains(customerAuxTwo));
 		assertTrue(currentObjectsListCustomer.contains(customerAuxThree));
 		assertEquals(3, currentObjectsListCustomer.size());
 
-		/*-----------------End of client operations-----------------*/
+		/*----------------End of customer operations-------------------*/
+
+		/*------------Starting operations of the product---------------*/
 
 		// Add Products
 		List<Product> currentObjectsListProduct = null;
@@ -2648,12 +3089,14 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.prepare(getAddProductFinishedState());
 		threadControl.proceed();
+
 		facade.addProduct(product1);
 		facade.addProduct(product2);
 		facade.addProduct(product3);
 
 		threadControl.waitUntilStateIsReached();
 
+		// Getting the List of Products
 		threadControl.prepare(getListOfProductFinishedState());
 		threadControl.proceed();
 
@@ -2667,9 +3110,15 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals(3, currentObjectsListProduct.size());
+		assertTrue(currentObjectsListProduct.contains(product1));
+		assertTrue(currentObjectsListProduct.contains(product2));
+		assertTrue(currentObjectsListProduct.contains(product3));
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
+		// Searching by product name
 		facade.searchProductByName("IPod", takerProductList);
 
 		try {
@@ -2679,6 +3128,12 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertTrue(currentObjectsListProduct.contains(productAuxOne));
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertFalse(productAuxOne.getPrice() == 3200);
+
+		// Searching by product name
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2689,7 +3144,14 @@ public class FacadeTestJpaWithConstant {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
 		threadControl.waitUntilStateIsReached();
+
+		assertTrue(currentObjectsListProduct.contains(productAuxTwo));
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertFalse(productAuxTwo.getPrice() == 1200);
+
+		// Searching by product name
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2703,14 +3165,19 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsListProduct.contains(productAuxThree));
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertFalse(productAuxThree.getPrice() == 1200);
+
 		assertTrue(currentObjectsListProduct.contains(productAuxOne));
 		assertTrue(currentObjectsListProduct.contains(productAuxTwo));
 		assertTrue(currentObjectsListProduct.contains(productAuxThree));
 		assertEquals(3, currentObjectsListProduct.size());
 
-		/*-----------------End of Product operations-----------------*/
+		/*-----------------End of Product operations-------------------*/
 
-		// Add Promotion
+		/*------------Starting operations of the Promotions---------------*/
+
 		List<Promotion> currentObjectsListPromotion = null;
 		Promotion promotionAuxOne = null;
 		Promotion promotionAuxTwo = null;
@@ -2725,7 +3192,7 @@ public class FacadeTestJpaWithConstant {
 		listProductTwo.add(productAuxThree);
 
 		Promotion promotion1 = new Promotion("Promoção Apple", listProductTwo,
-				50, 30);
+				5000, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 
@@ -2734,8 +3201,10 @@ public class FacadeTestJpaWithConstant {
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
+
 		threadControl.waitUntilStateIsReached();
 
+		// Getting the list of Promotions
 		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 
@@ -2749,6 +3218,11 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsListPromotion.contains(promotion1));
+		assertTrue(currentObjectsListPromotion.contains(promotion2));
+		assertEquals(2, currentObjectsListPromotion.size());
+
+		// getting promotions by Name
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -2761,6 +3235,11 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("Promoção Apple".toUpperCase(), promotionAuxOne.getName());
+		assertEquals(listProductTwo, promotionAuxOne.getListProducts());
+
+		// getting promotions by Name
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -2774,16 +3253,26 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("Promotion Apple Combo".toUpperCase(),
+				promotionAuxTwo.getName());
+		assertEquals(listProduct, promotionAuxTwo.getListProducts());
+
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxOne));
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxTwo));
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxThree));
 		assertEquals(2, currentObjectsListPromotion.size());
 
 		/*-----------------End of Promotion operations-----------------*/
+
+		/*------------Starting operations of the Purchases-------------*/
+
+		// Creating list of Products
 		List<Purchase> listPurchase = null;
 		Map<Product, Integer> listProductAux = new HashMap<Product, Integer>();
 		listProductAux.put(productAuxOne, 5);
 
+		// Creating list of Promotions
 		Map<Promotion, Integer> listPromotionAux = new HashMap<Promotion, Integer>();
 		listPromotionAux.put(promotionAuxOne, 5);
 		listPromotionAux.put(promotionAuxTwo, 10);
@@ -2795,14 +3284,17 @@ public class FacadeTestJpaWithConstant {
 		Purchase purchaseThree = new Purchase(customerAuxThree, listProductAux,
 				listPromotionAux);
 
+		// Adding Purchases
 		threadControl.prepare(getAddPurchaseFinishedState());
 		threadControl.proceed();
 
 		facade.addPurchase(purchaseOne);
 		facade.addPurchase(purchaseTwo);
 		facade.addPurchase(purchaseThree);
+
 		threadControl.waitUntilStateIsReached();
 
+		// Getting the list of Purchases
 		threadControl.prepare(getListOfPurchaseFinishedState());
 		threadControl.proceed();
 		facade.getListOfPurchase(copyListOfAllPurchase);
@@ -2814,19 +3306,12 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
 		assertEquals(3, listPurchase.size());
+		assertTrue(listPurchase.contains(purchaseOne));
+		assertTrue(listPurchase.contains(purchaseTwo));
+		assertTrue(listPurchase.contains(purchaseThree));
 
-		Purchase purchaseAux = null;
-
-		for (Purchase purchase : listPurchase) {
-			if (purchase.getListProducts() != null) {
-				if (purchase.getListProducts() == purchaseOne.getListProducts()) {
-					purchaseAux = purchase;
-				}
-			}
-		}
-
-		assertEquals(customerAuxOne, purchaseAux.getCustomer());
 		threadControl.proceed();
 
 	}
@@ -2834,7 +3319,7 @@ public class FacadeTestJpaWithConstant {
 	/**
 	 * Test method for
 	 * {@link br.edu.ufpb.threadControl.messengerConcurrent.controller.Facade#removePurchase(br.edu.ufpb.threadControl.messengerConcurrent.entity.Purchase)}
-	 * .
+	 * 
 	 */
 	@Test
 	public void testRemovePurchase() {
@@ -2844,11 +3329,11 @@ public class FacadeTestJpaWithConstant {
 		Customer customerAuxTwo = null;
 		Customer customerAuxThree = null;
 
-		Customer customer1 = new Customer("Diego", "111", "3422-1048",
+		Customer customer1 = new Customer("Diego", "07278910112", "3422-1010",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
-		Customer customer2 = new Customer("Ayla", "222", "3422-1049",
+		Customer customer2 = new Customer("Ayla", "07278910113", "3422-1011",
 				"ayla@dce.ufpb.br", "S3cr3t2", 18, 11, 1988);
-		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
+		Customer customer3 = new Customer("Kawe", "07278910114", "3422-1012",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// Add Customer
 		threadControl.prepare(getAddCustomerFinishedState());
@@ -2857,6 +3342,7 @@ public class FacadeTestJpaWithConstant {
 		facade.addCustomer(customer3);
 
 		threadControl.waitUntilStateIsReached();
+
 		// getting the list of customer
 		threadControl.prepare(getListOfCustomerFinishedState());
 		threadControl.proceed();
@@ -2870,11 +3356,18 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertTrue(currentObjectsListCustomer.contains(customer1));
+		assertTrue(currentObjectsListCustomer.contains(customer2));
+		assertTrue(currentObjectsListCustomer.contains(customer3));
+		assertEquals(3, currentObjectsListCustomer.size());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("111", takerClientList);
+		// Searching Customer By CPF
+		facade.searchCustomerByCpf("07278910112", takerClientList);
 
 		try {
 			customerAuxOne = takerClientList.take();
@@ -2883,10 +3376,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t", customerAuxOne.getPassword());
+		assertEquals("3422-1010", customerAuxOne.getPhone());
+
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("222", takerClientList);
+		// Searching Customer By CPF
+		facade.searchCustomerByCpf("07278910113", takerClientList);
 
 		try {
 			customerAuxTwo = takerClientList.take();
@@ -2895,11 +3393,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
-		// getting customer
+
+		assertEquals("S3cr3t2", customerAuxTwo.getPassword());
+		assertEquals("3422-1011", customerAuxTwo.getPhone());
+
+		// Searching Customer By CPF
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("333", takerClientList);
+		facade.searchCustomerByCpf("07278910114", takerClientList);
 
 		try {
 			customerAuxThree = takerClientList.take();
@@ -2908,6 +3410,9 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t3", customerAuxThree.getPassword());
+		assertEquals("3422-1012", customerAuxThree.getPhone());
 		assertTrue(currentObjectsListCustomer.contains(customerAuxOne));
 		assertTrue(currentObjectsListCustomer.contains(customerAuxTwo));
 		assertTrue(currentObjectsListCustomer.contains(customerAuxThree));
@@ -2947,6 +3452,11 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsListProduct.contains(product1));
+		assertTrue(currentObjectsListProduct.contains(product2));
+		assertTrue(currentObjectsListProduct.contains(product3));
+		assertEquals(3, currentObjectsListProduct.size());
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2959,6 +3469,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2970,6 +3484,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -2983,6 +3501,8 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
 		assertTrue(currentObjectsListProduct.contains(productAuxOne));
 		assertTrue(currentObjectsListProduct.contains(productAuxTwo));
 		assertTrue(currentObjectsListProduct.contains(productAuxThree));
@@ -3005,7 +3525,7 @@ public class FacadeTestJpaWithConstant {
 		listProductTwo.add(productAuxThree);
 
 		Promotion promotion1 = new Promotion("Promoção Apple", listProductTwo,
-				50, 30);
+				5000, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 
@@ -3029,6 +3549,10 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsListPromotion.contains(promotion1));
+		assertTrue(currentObjectsListPromotion.contains(promotion2));
+		assertEquals(2, currentObjectsListPromotion.size());
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -3041,6 +3565,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("Promoção Apple".toUpperCase(), promotionAuxOne.getName());
+		assertTrue(promotionAuxOne.getQuantityProductPromotion() == 30);
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -3054,6 +3582,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+		assertEquals("Promotion Apple Combo".toUpperCase(),
+				promotionAuxTwo.getName());
+		assertTrue(promotionAuxTwo.getQuantityProductPromotion() == 30);
+
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxOne));
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxTwo));
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxThree));
@@ -3095,11 +3627,10 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 		assertEquals(3, listPurchase.size());
-		Purchase purchaseAux = listPurchase.get(0);
 
 		threadControl.prepare(getRemovePurchaseFinishedState());
 		threadControl.proceed();
-		facade.removePurchase(purchaseAux);
+		facade.removePurchase(listPurchase.get(0));
 
 		threadControl.waitUntilStateIsReached();
 
@@ -3132,11 +3663,11 @@ public class FacadeTestJpaWithConstant {
 		Customer customerAuxTwo = null;
 		Customer customerAuxThree = null;
 
-		Customer customer1 = new Customer("Diego", "111", "3422-1048",
+		Customer customer1 = new Customer("Diego", "07278910112", "3422-1010",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
-		Customer customer2 = new Customer("Ayla", "222", "3422-1049",
+		Customer customer2 = new Customer("Ayla", "07278910113", "3422-1011",
 				"ayla@dce.ufpb.br", "S3cr3t2", 18, 11, 1988);
-		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
+		Customer customer3 = new Customer("Kawe", "07278910114", "3422-1012",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// Add Customer
 		threadControl.prepare(getAddCustomerFinishedState());
@@ -3158,11 +3689,17 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertTrue(currentObjectsListCustomer.contains(customer1));
+		assertTrue(currentObjectsListCustomer.contains(customer2));
+		assertTrue(currentObjectsListCustomer.contains(customer3));
+		assertEquals(3, currentObjectsListCustomer.size());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("111", takerClientList);
+		facade.searchCustomerByCpf("07278910112", takerClientList);
 
 		try {
 			customerAuxOne = takerClientList.take();
@@ -3171,10 +3708,14 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t", customerAuxOne.getPassword());
+		assertEquals("3422-1010", customerAuxOne.getPhone());
+
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("222", takerClientList);
+		facade.searchCustomerByCpf("07278910113", takerClientList);
 
 		try {
 			customerAuxTwo = takerClientList.take();
@@ -3183,11 +3724,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t2", customerAuxTwo.getPassword());
+		assertEquals("3422-1011", customerAuxTwo.getPhone());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("333", takerClientList);
+		facade.searchCustomerByCpf("07278910114", takerClientList);
 
 		try {
 			customerAuxThree = takerClientList.take();
@@ -3196,6 +3741,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t3", customerAuxThree.getPassword());
+		assertEquals("3422-1012", customerAuxThree.getPhone());
+
 		assertTrue(currentObjectsListCustomer.contains(customerAuxOne));
 		assertTrue(currentObjectsListCustomer.contains(customerAuxTwo));
 		assertTrue(currentObjectsListCustomer.contains(customerAuxThree));
@@ -3235,6 +3784,11 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsListProduct.contains(product1));
+		assertTrue(currentObjectsListProduct.contains(product2));
+		assertTrue(currentObjectsListProduct.contains(product3));
+		assertEquals(3, currentObjectsListProduct.size());
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -3247,6 +3801,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -3258,6 +3816,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -3270,6 +3832,9 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
 
 		assertTrue(currentObjectsListProduct.contains(productAuxOne));
 		assertTrue(currentObjectsListProduct.contains(productAuxTwo));
@@ -3293,7 +3858,7 @@ public class FacadeTestJpaWithConstant {
 		listProductTwo.add(productAuxThree);
 
 		Promotion promotion1 = new Promotion("Promoção Apple", listProductTwo,
-				50, 30);
+				5000, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 
@@ -3317,6 +3882,10 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsListPromotion.contains(promotion1));
+		assertTrue(currentObjectsListPromotion.contains(promotion2));
+		assertEquals(2, currentObjectsListPromotion.size());
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -3329,6 +3898,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("Promoção Apple".toUpperCase(), promotionAuxOne.getName());
+		assertTrue(promotionAuxOne.getQuantityProductPromotion() == 30);
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -3342,6 +3915,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+		assertEquals("Promotion Apple Combo".toUpperCase(),
+				promotionAuxTwo.getName());
+		assertTrue(promotionAuxTwo.getQuantityProductPromotion() == 30);
+
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxOne));
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxTwo));
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxThree));
@@ -3407,11 +3984,11 @@ public class FacadeTestJpaWithConstant {
 		Customer customerAuxTwo = null;
 		Customer customerAuxThree = null;
 
-		Customer customer1 = new Customer("Diego", "111", "3422-1048",
+		Customer customer1 = new Customer("Diego", "07278910112", "3422-1010",
 				"diego.sousa@dce.ufpb.br", "S3cr3t", 18, 11, 1988);
-		Customer customer2 = new Customer("Ayla", "222", "3422-1049",
+		Customer customer2 = new Customer("Ayla", "07278910113", "3422-1011",
 				"ayla@dce.ufpb.br", "S3cr3t2", 18, 11, 1988);
-		Customer customer3 = new Customer("Kawe", "333", "3422-1050",
+		Customer customer3 = new Customer("Kawe", "07278910114", "3422-1012",
 				"kawe.ramon@dce.ufpb.br", "S3cr3t3", 18, 11, 1988);
 		// Add Customer
 		threadControl.prepare(getAddCustomerFinishedState());
@@ -3433,11 +4010,17 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertTrue(currentObjectsListCustomer.contains(customer1));
+		assertTrue(currentObjectsListCustomer.contains(customer2));
+		assertTrue(currentObjectsListCustomer.contains(customer3));
+		assertEquals(3, currentObjectsListCustomer.size());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("111", takerClientList);
+		facade.searchCustomerByCpf("07278910112", takerClientList);
 
 		try {
 			customerAuxOne = takerClientList.take();
@@ -3446,10 +4029,14 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t", customerAuxOne.getPassword());
+		assertEquals("3422-1010", customerAuxOne.getPhone());
+
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("222", takerClientList);
+		facade.searchCustomerByCpf("07278910113", takerClientList);
 
 		try {
 			customerAuxTwo = takerClientList.take();
@@ -3458,11 +4045,15 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t2", customerAuxTwo.getPassword());
+		assertEquals("3422-1011", customerAuxTwo.getPhone());
+
 		// getting customer
 		threadControl.prepare(getSearchCustomerByCpfFinishedState());
 		threadControl.proceed();
 
-		facade.searchCustomerByCpf("333", takerClientList);
+		facade.searchCustomerByCpf("07278910114", takerClientList);
 
 		try {
 			customerAuxThree = takerClientList.take();
@@ -3471,6 +4062,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("S3cr3t3", customerAuxThree.getPassword());
+		assertEquals("3422-1012", customerAuxThree.getPhone());
+
 		assertTrue(currentObjectsListCustomer.contains(customerAuxOne));
 		assertTrue(currentObjectsListCustomer.contains(customerAuxTwo));
 		assertTrue(currentObjectsListCustomer.contains(customerAuxThree));
@@ -3510,6 +4105,11 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsListProduct.contains(product1));
+		assertTrue(currentObjectsListProduct.contains(product2));
+		assertTrue(currentObjectsListProduct.contains(product3));
+		assertEquals(3, currentObjectsListProduct.size());
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -3522,6 +4122,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPod".toUpperCase(), productAuxOne.getName());
+		assertTrue(productAuxOne.getPrice() == 1200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -3533,6 +4137,10 @@ public class FacadeTestJpaWithConstant {
 			e.printStackTrace();
 		}
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPad".toUpperCase(), productAuxTwo.getName());
+		assertTrue(productAuxTwo.getPrice() == 3200.00);
+
 		threadControl.prepare(getSearchProductByNameFinishedState());
 		threadControl.proceed();
 
@@ -3545,6 +4153,9 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("IPhone".toUpperCase(), productAuxThree.getName());
+		assertTrue(productAuxThree.getPrice() == 2200.00);
 
 		assertTrue(currentObjectsListProduct.contains(productAuxOne));
 		assertTrue(currentObjectsListProduct.contains(productAuxTwo));
@@ -3568,7 +4179,7 @@ public class FacadeTestJpaWithConstant {
 		listProductTwo.add(productAuxThree);
 
 		Promotion promotion1 = new Promotion("Promoção Apple", listProductTwo,
-				50, 30);
+				5000, 30);
 		Promotion promotion2 = new Promotion("Promotion Apple Combo",
 				listProduct, 3000, 30);
 
@@ -3577,8 +4188,10 @@ public class FacadeTestJpaWithConstant {
 
 		facade.addPromotion(promotion1);
 		facade.addPromotion(promotion2);
+
 		threadControl.waitUntilStateIsReached();
 
+		// getting
 		threadControl.prepare(getListOfPromotionFinishedState());
 		threadControl.proceed();
 
@@ -3592,6 +4205,10 @@ public class FacadeTestJpaWithConstant {
 
 		threadControl.waitUntilStateIsReached();
 
+		assertTrue(currentObjectsListPromotion.contains(promotion1));
+		assertTrue(currentObjectsListPromotion.contains(promotion2));
+		assertEquals(2, currentObjectsListPromotion.size());
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -3604,6 +4221,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+
+		assertEquals("Promoção Apple".toUpperCase(), promotionAuxOne.getName());
+		assertTrue(promotionAuxOne.getQuantityProductPromotion() == 30);
+
 		threadControl.prepare(getSearchPromotionByNameFinishedState());
 		threadControl.proceed();
 
@@ -3617,6 +4238,10 @@ public class FacadeTestJpaWithConstant {
 		}
 
 		threadControl.waitUntilStateIsReached();
+		assertEquals("Promotion Apple Combo".toUpperCase(),
+				promotionAuxTwo.getName());
+		assertTrue(promotionAuxTwo.getQuantityProductPromotion() == 30);
+
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxOne));
 		assertTrue(currentObjectsListPromotion.contains(promotionAuxTwo));
 		assertFalse(currentObjectsListPromotion.contains(promotionAuxThree));

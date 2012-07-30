@@ -65,8 +65,9 @@ public class CustomerService {
 
 	@GET
 	@Path("/searchcustomerbyid")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Customer searchcustomerbyid(String id) {
+	public Customer searchcustomerbyid(String id) {		
 		BlockingQueue<Customer> listCustomer = new LinkedBlockingQueue<Customer>();
 		Customer customerAux = null;
 
@@ -85,6 +86,7 @@ public class CustomerService {
 
 	@GET
 	@Path("/searchcustomerbylogin")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Customer searchcustomerbylogin(String login) {
 		BlockingQueue<Customer> listCustomer = new LinkedBlockingQueue<Customer>();
@@ -104,6 +106,7 @@ public class CustomerService {
 
 	@GET
 	@Path("/searchcustomerbycpf")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Customer searchCustomerByCpf(String cpf) {
 		BlockingQueue<Customer> listCustomer = new LinkedBlockingQueue<Customer>();

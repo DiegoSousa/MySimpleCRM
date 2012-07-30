@@ -65,7 +65,8 @@ public class ProductService {
 
 	@GET
 	@Path("/searchproductbyid")
-	@Produces(MediaType.APPLICATION_JSON)
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)	
 	public Product searchProductById(String id) {
 		BlockingQueue<Product> listproduct = new LinkedBlockingQueue<Product>();
 		Product productAux = null;
@@ -85,7 +86,8 @@ public class ProductService {
 
 	@GET
 	@Path("/searchproductbyname")
-	@Produces(MediaType.APPLICATION_JSON)
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)
 	public Product searchProductByName(String name) {
 		BlockingQueue<Product> listproduct = new LinkedBlockingQueue<Product>();
 		Product productAux = null;
@@ -105,7 +107,7 @@ public class ProductService {
 	}
 
 	@GET
-	@Path("/getlistofproduct")
+	@Path("/getlistofproduct")	
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Product> getListProducts() {
 		BlockingQueue<List<Product>> listproduct = new LinkedBlockingQueue<List<Product>>();

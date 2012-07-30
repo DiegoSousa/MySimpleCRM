@@ -66,8 +66,8 @@ public class PromotionService {
 
 	@GET
 	@Path("/searchpromotionbyid")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)
 	public Promotion searchPromotionById(String id) throws Exception {
 		BlockingQueue<Promotion> listPromotion = new LinkedBlockingQueue<Promotion>();
 		Promotion promotionAux = null;
@@ -85,8 +85,8 @@ public class PromotionService {
 
 	@GET
 	@Path("/searchpromotionbyname")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)
 	public Promotion searchPromotionByName(String namePromotion) {
 
 		BlockingQueue<Promotion> listPromotion = new LinkedBlockingQueue<Promotion>();
@@ -106,8 +106,8 @@ public class PromotionService {
 	
 	@GET
 	@Path("/searchpromotionbyproduct")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)
 	public List<Promotion> searchPromotionByProduct(Product product) {
 
 		BlockingQueue<List<Promotion>> listPromotion = new LinkedBlockingQueue<List<Promotion>>();
