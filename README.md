@@ -71,7 +71,7 @@ The End!
 <b>1.2 -There are two ways of creating the database. Using the script creation (1.2.1) or 
 creating manually using the client PostgreSQL PgAdmin (1.2.2). <b>Choose the one that interests you.<b>
  
-<b>1.2.1 - Using the script creation<b> 
+<b>1.2.1 - "Using the script creation"<b> 
 
 Open your terminal type:
 
@@ -80,7 +80,7 @@ Open your terminal type:
 
 <b>1.2.2 - Creating manually using the client PostgreSQL PgAdmin:<b>
 
-Create a database with the name "messengerConcurrent" and set the "Login Role" default PostgreSQL, which contains login and password 'postgres'.
+# Create a database with the name "messengerConcurrent" and set the "Login Role" default PostgreSQL, which contains login and password 'postgres'.
 
 
 <b>The End!<b>
