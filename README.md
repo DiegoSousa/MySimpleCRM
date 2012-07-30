@@ -34,7 +34,7 @@ since the framework is implemented JPA (Java Persistence API)<br />
 
 	cd ~/workspace/
 
-<b>1.1 - Ctrl+C and Ctrl+V in terminal:<b>
+<b>1.1 - Ctrl+C and Ctrl+Shift+V in terminal:<b>
 
 	git clone git@github.com:DiegoSousa/MessengerConcurrent.git
 
@@ -75,12 +75,15 @@ creating manually using the client PostgreSQL PgAdmin (1.2.2). <b>Choose the one
 
 Open your terminal type:
 
-	chmod +x ./createDatabaseAndTables.sh
+	cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database
 
 Then type:
 
-	cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database -> ENTER -> 
-	chmod +x createDatabaseAndTables.sh -> ./createDatabaseAndTables.sh
+	chmod +x createDatabase.sh
+
+Then type:
+	 
+	./createDatabaseAndTables.sh
 
 <b>1.2.2 - Creating manually using the client PostgreSQL PgAdmin:<b>
 
@@ -95,8 +98,104 @@ Then type:
 <b>Contact</b> diego[at]diegosousa[dot]com <b>or</b> diego.sousa[at]dce.ufpb.br
 
 
-
 <h1>Tutorial Versão em Português:
+
+<h1>Configurando o Eclipse:
+ 
+<b>1 - Para instalar o AJDT:<b>
+
+	No Eclipse vá em -> Ajuda -> Eclipse MarketPlace -> instale o AJDT correspondente a sua versão do eclipse.
+
+<b>2 - Para instalar o Maven:<b>
+
+	No Eclipse vá em -> Ajuda -> Eclipse MarketPlace -> instale o "Maven Integration for eclipse WTP".
+
+<h1>Para importar corretamente o aplicativo basta seguir os passos seguintes:
+
+<b>1 - Usando um Terminal ou um cliente Git, faça o clone em seu workspace.<b>
+
+	cd ~/workspace/
+
+<b>1.1 - Ctrl+C and Ctrl+Shift+V no terminal:<b>
+
+	git clone git@github.com:DiegoSousa/MessengerConcurrent.git
+
+<b>2 - No Eclipse vá em:<b> 
+
+	file -> import -> digite na local da busca "Existing maven projects" -> next -> Browser -> 
+	selecione o project messengerConcurrent -> Fim.
+
+<b>3 - Aguarde até que o maven faça o download de todas as bibliotecas.<b>
+
+Fim!
+
+<h1>Configurando o projeto:
+
+<b>1 - Botão direito em:<b>
+
+	MessengerConcurrent -> propriedades -> "Source" -> Adicionar pasta -> busque por threadControl_<version>_src -> 
+	Marque as opções srcAspectsTC e srcTC. 
+
+<b>2 - Botão direito em:<b>
+
+	MessengerConcurrent -> Configure -> Converter para Projeto AspectJ.
+
+<h1>Configurando a Base de Dados:
+
+<b>1 - Instale PostgreSQL<b> 
+
+	(http://www.postgresql.org/download/).
+
+<b>1.1 - Se achar necessário, instale o cliente PostgreSQL<b>
+
+	http://www.pgadmin.org/download/
+
+<b>1.2 - Existe duas formas de criar a base de dados. Usando o script Shell de creação (1.2.1) ou
+criando manualmente usando o cliente PostgreSQL PgAdmin (1.2.2). <b>Escolhe a forma que mais lhe agradar.<b>
+ 
+<b>1.2.1 - "Usando o script de criação"<b> 
+
+Abra o terminal e digite:
+
+	cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database/
+		
+Dê enter e digite:
+
+	chmod +x createDatabase.sh
+
+Então digite:
+
+	./createDatabase.sh
+
+<b>1.2.2 - Creando manualmente, usando o cliente PostgreSQL PgAdmin:<b>
+
+	Crie a Base de Dados com o nome "messengerConcurrent" e set o "Login Role" default do PostgreSQL, 
+	que contém o login e o password igual a 'postgres'.
+
+
+<b>Fim!<b>
+
+<b>Duvidas?<b>
+
+<b>Contato:</b> diego[at]diegosousa[dot]com <b>or</b> diego.sousa[at]dce.ufpb.br
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Requisitos:
 Web Server: Apache Tomcat 7+<br />
@@ -104,7 +203,6 @@ JDK: Version 6+<br />
 IDE: Eclipse Java EE indigo+<br />
 AJDT (AspectJ Development Tools)¹<br />
 Maven: Version 2²<br />
-Teste: JUnit 4+³<br />
 Banco de Dados: Preferencialmente PostgreSQL, mas é possivel utilizar outros bancos,<br />
 já que está implementado o framework JPA (Java Persistence API)<br />
  
