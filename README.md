@@ -92,7 +92,8 @@ Then type:
 
 <b>Doubts?<b>
 
-<b>Contact diego@diegosousa.com or diego.sousa@dce.ufpb.br<b>
+<b>Contact diego[at]diegosousa[dot]com or diego.sousa[at]dce.ufpb.br<b>
+
 
 
 <h1>Tutorial Versão em Português:
