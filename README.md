@@ -32,11 +32,11 @@ since the framework is implemented JPA (Java Persistence API)<br />
 
 <b>1 - Using a Terminal or a Customer Git, do the clone within your workspace.<b>
 
-	cd ~/workspace/
+	$ cd ~/workspace/
 
 <b>1.1 - Ctrl+C and Ctrl+Shift+V in terminal:<b>
 
-	git clone git@github.com:DiegoSousa/MessengerConcurrent.git
+	$ git clone git@github.com:DiegoSousa/MessengerConcurrent.git
 
 <b>2 - In eclipse go in:<b> 
 
@@ -75,15 +75,15 @@ creating manually using the client PostgreSQL PgAdmin (1.2.2). <b>Choose the one
 
 Open your terminal type:
 
-	cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database
+	$ cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database
 
 Then type:
 
-	chmod +x createDatabase.sh
+	$ chmod +x createDatabase.sh
 
 Then type:
 	 
-	./createDatabaseAndTables.sh
+	$ ./createDatabaseAndTables.sh
 
 <b>1.2.2 - Creating manually using the client PostgreSQL PgAdmin:<b>
 
@@ -114,11 +114,11 @@ Then type:
 
 <b>1 - Usando um Terminal ou um cliente Git, faça o clone em seu workspace.<b>
 
-	cd ~/workspace/
+	$ cd ~/workspace/
 
 <b>1.1 - Ctrl+C and Ctrl+Shift+V no terminal:<b>
 
-	git clone git@github.com:DiegoSousa/MessengerConcurrent.git
+	$ git clone git@github.com:DiegoSousa/MessengerConcurrent.git
 
 <b>2 - No Eclipse vá em:<b> 
 
@@ -156,15 +156,15 @@ criando manualmente usando o cliente PostgreSQL PgAdmin (1.2.2). <b>Escolhe a fo
 
 Abra o terminal e digite:
 
-	cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database/
+	$ cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database/
 		
 Dê enter e digite:
 
-	chmod +x createDatabase.sh
+	$ chmod +x createDatabase.sh
 
 Então digite:
 
-	./createDatabase.sh
+	$ ./createDatabase.sh
 
 <b>1.2.2 - Criando manualmente, usando o cliente PostgreSQL PgAdmin:<b>
 
