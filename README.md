@@ -51,7 +51,7 @@ The End!
 
 <b>1 - Right-click in:<b>
 
-	MessengerConcurrent -> properties -> "Source" -> Add Folder -> threadControl_<version>_src -> 
+	MessengerConcurrent -> properties -> Java Build Path -> "Source" -> Add Folder -> threadControl_<version>_src -> 
 	check the option srcAspectsTC and srcTC. 
 
 <b>2 - Right-click in:<b>
@@ -132,7 +132,7 @@ Then type:
 
 <b>1 - Botão direito em:<b>
 
-	MessengerConcurrent -> propriedades -> "Source" -> Adicionar pasta -> busque por threadControl_<version>_src -> 
+	MessengerConcurrent -> propriedades -> Java Build Path -> "Source" -> Adicionar pasta -> busque por threadControl_<version>_src -> 
 	Marque as opções srcAspectsTC e srcTC. 
 
 <b>2 - Botão direito em:<b>
