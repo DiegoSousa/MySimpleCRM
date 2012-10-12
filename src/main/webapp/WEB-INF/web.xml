@@ -5,7 +5,6 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
 	<display-name>MessengerConcurrent</display-name>
-	<display-name>br.edu.ufpb.threadControl.messengerConcurrent.webService</display-name>
 
 	<servlet>
 		<servlet-name>Jersey REST Service</servlet-name>

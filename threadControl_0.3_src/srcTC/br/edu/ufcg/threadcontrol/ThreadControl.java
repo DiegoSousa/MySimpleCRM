@@ -82,7 +82,7 @@ public class ThreadControl {
 	 * Throws a RuntimeException indicating that the classes that use this
 	 * package should be compiled using AspectJ compiler.
 	 */
-	private static void throwNotUsingAspectsException() {
+	private static void throwNotUsingAspectsException() {		
 		throw new RuntimeException(
 				"This class should be used only after compiling with aspects.");
 	}
