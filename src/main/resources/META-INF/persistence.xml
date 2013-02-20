@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" >
 
     <persistence-unit
-        name="messengerConcurrentPU"
+        name="mySimpleCRMPU"
         transaction-type="RESOURCE_LOCAL" >
 
         <provider>
@@ -36,7 +36,7 @@ org.hibernate.ejb.HibernatePersistence
 
             <property
                 name="javax.persistence.jdbc.url"
-                value="jdbc:postgresql://127.0.0.1:5432/messengerConcurrent"/>
+                value="jdbc:postgresql://127.0.0.1:5432/MySimpleCRM"/>
         </properties>
     </persistence-unit>
 </persistence>

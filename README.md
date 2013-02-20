@@ -36,12 +36,12 @@ since the framework is implemented JPA (Java Persistence API)<br />
 
 <b>1.1 - Ctrl+C and Ctrl+Shift+V in terminal:<b>
 
-	$ git clone git@github.com:DiegoSousa/MessengerConcurrent.git
+	$ git clone git@github.com:DiegoSousa/MySimpleCRM.git
 
 <b>2 - In eclipse go in:<b> 
 
 	file -> import -> type in the search above "Existing maven projects" -> next -> Browser -> 
-	select the project messengerConcurrent -> Finish.
+	select the project mySimpleCRM -> Finish.
 
 <b>3 - Wait until the maven download all libraries.<b>
 
@@ -51,12 +51,12 @@ The End!
 
 <b>1 - Right-click in:<b>
 
-	MessengerConcurrent -> properties -> Java Build Path -> "Source" -> Add Folder -> threadControl_<version>_src -> 
+	MySimpleCRM -> properties -> Java Build Path -> "Source" -> Add Folder -> threadControl_<version>_src -> 
 	check the option srcAspectsTC and srcTC. 
 
 <b>2 - Right-click in:<b>
 
-	MessengerConcurrent -> Configure -> Convert to AspectJ Project.
+	MySimpleCRM -> Configure -> Convert to AspectJ Project.
 
 <h1>Configuring the Database:
 
@@ -75,7 +75,7 @@ creating manually using the client PostgreSQL PgAdmin (1.2.2). <b>Choose the one
 
 Open your terminal type:
 
-	$ cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database
+	$ cd ~/workspace/MySimpleCRM/src/main/resources/Scripts_Database
 
 Then type:
 
@@ -87,7 +87,7 @@ Then type:
 
 <b>1.2.2 - Creating manually using the client PostgreSQL PgAdmin:<b>
 
-	Create a database with the name "messengerConcurrent" and set the "Login Role" default PostgreSQL, 
+	Create a database with the name "mySimpleCRM" and set the "Login Role" default PostgreSQL, 
 	which contains login and password 'postgres'.
 
 
@@ -118,12 +118,12 @@ Then type:
 
 <b>1.1 - Ctrl+C and Ctrl+Shift+V no terminal:<b>
 
-	$ git clone git@github.com:DiegoSousa/MessengerConcurrent.git
+	$ git clone git@github.com:DiegoSousa/MySimpleCRM.git
 
 <b>2 - No Eclipse vá em:<b> 
 
 	file -> import -> digite na local da busca "Existing maven projects" -> next -> Browser -> 
-	selecione o project messengerConcurrent -> Fim.
+	selecione o project mySimpleCRM -> Fim.
 
 <b>3 - Aguarde até que o maven faça o download de todas as bibliotecas.<b>
 
@@ -132,12 +132,12 @@ Then type:
 
 <b>1 - Botão direito em:<b>
 
-	MessengerConcurrent -> propriedades -> Java Build Path -> "Source" -> Adicionar pasta -> busque por threadControl_<version>_src -> 
+	MySimpleCRM -> propriedades -> Java Build Path -> "Source" -> Adicionar pasta -> busque por threadControl_<version>_src -> 
 	Marque as opções srcAspectsTC e srcTC. 
 
 <b>2 - Botão direito em:<b>
 
-	MessengerConcurrent -> Configure -> Converter para Projeto AspectJ.
+	MySimpleCRM -> Configure -> Converter para Projeto AspectJ.
 
 <h1>Configurando a Base de Dados:
 
@@ -156,7 +156,7 @@ criando manualmente usando o cliente PostgreSQL PgAdmin (1.2.2). <b>Escolhe a fo
 
 Abra o terminal e digite:
 
-	$ cd ~/workspace/MessengerConcurrent/src/main/resources/Scripts_Database/
+	$ cd ~/workspace/MySimpleCRM/src/main/resources/Scripts_Database/
 		
 Dê enter e digite:
 
@@ -168,7 +168,7 @@ Então digite:
 
 <b>1.2.2 - Criando manualmente, usando o cliente PostgreSQL PgAdmin:<b>
 
-	Crie a Base de Dados com o nome "messengerConcurrent" e set o "Login Role" default do PostgreSQL, 
+	Crie a Base de Dados com o nome "mySimpleCRM" e set o "Login Role" default do PostgreSQL, 
 	que contém o login e o password igual a 'postgres'.
 
 

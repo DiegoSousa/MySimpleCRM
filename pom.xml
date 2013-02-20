@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>br.edu.ufpb.threadControl.messengerConcurrent</groupId>
-	<artifactId>MessengerConcurrent</artifactId>
+	<groupId>br.edu.ufpb.threadControl.mySimpleCRM</groupId>
+	<artifactId>MySimpleCRM</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>MessengerConcurrent</name>
+	<name>MySimpleCRM</name>
 	<url>sites.google.com/a/dce.ufpb.br/tct/inicio</url>
-
+	
 	<developers>
 		<developer>
 			<organization>UFPB - Universidade Federal da Paraíba</organization>
@@ -23,7 +23,7 @@
 			<timezone>-3</timezone>
 		</developer>
 	</developers>
-
+	
 	<contributors>
 		<contributor>
 			<organization>UFPB - Universidade Federal da Paraíba</organization>
@@ -58,7 +58,7 @@
 			<artifactId>junit</artifactId>
 			<version>4.8.2</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency>		
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -76,9 +76,14 @@
 		</dependency>
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-servlet</artifactId>
+			<version>1.13</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-json</artifactId>
 			<version>1.8</version>
-		</dependency>
+		</dependency>		
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
@@ -92,7 +97,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>MessengerConcurrent</finalName>
+		<finalName>MySimpleCRM</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>

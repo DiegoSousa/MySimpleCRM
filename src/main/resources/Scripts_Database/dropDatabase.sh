@@ -9,13 +9,13 @@
 
 
 echo "=============================================="
-echo "Deleting database MessengerConcurrent..."
+echo "Deleting database MySimpleCRM..."
 echo
 echo "Alert: Remember to close any instance of postgreSQL as psql or pgadmin."
 echo
 echo "Message from console:"
 echo
-dropdb -p 5432 -h localhost -U postgres -e messengerConcurrent
+dropdb -p 5432 -h localhost -U postgres -e mySimpleCRM
 echo
 echo "Finished Script!"
 echo "=============================================="

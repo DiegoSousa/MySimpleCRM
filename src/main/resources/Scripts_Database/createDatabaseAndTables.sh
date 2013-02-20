@@ -9,7 +9,7 @@
 
 
 echo "=============================================="
-echo "Create DataBase and Tables from MessengerConcurrent..."
+echo "Create DataBase and Tables from MySimpleCRM..."
 echo
 echo "Alert: It may be necessary to close any instance of postgreSQL as psql or pgadmin."
 echo
@@ -17,9 +17,9 @@ echo "Please provide a password if required: "
 echo
 echo "Message from console:"
 echo
-createdb -p 5432 -h localhost -U postgres -e messengerConcurrent
+createdb -p 5432 -h localhost -U postgres -e mySimpleCRM
 echo
-psql -h localhost -U postgres -d messengerConcurrent -t -c "CREATE TABLE customers
+psql -h localhost -U postgres -d mySimpleCRM -t -c "CREATE TABLE customers
 (
   id_customer bigserial NOT NULL,
   date_of_birth date NOT NULL,
