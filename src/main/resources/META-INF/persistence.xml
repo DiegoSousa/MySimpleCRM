@@ -36,7 +36,7 @@ org.hibernate.ejb.HibernatePersistence
 
             <property
                 name="javax.persistence.jdbc.url"
-                value="jdbc:postgresql://127.0.0.1:5432/MySimpleCRM"/>
+                value="jdbc:postgresql://127.0.0.1:5432/mySimpleCRM"/>
         </properties>
     </persistence-unit>
 </persistence>
