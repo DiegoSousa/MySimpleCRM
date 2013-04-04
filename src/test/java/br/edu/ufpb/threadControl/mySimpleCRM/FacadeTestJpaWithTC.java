@@ -68,7 +68,7 @@ import br.edu.ufpb.threadControl.mySimpleCRM.util.HibernateUtil;
  * @version 2.0 Copyright (C) 2012 Diego Sousa de Azevedo
  */
 
-public class FacadeTestJpa {
+public class FacadeTestJpaWithTC {
 
 	private static Facade facade;
 	private ThreadControl threadControl;
