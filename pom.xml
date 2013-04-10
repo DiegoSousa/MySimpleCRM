@@ -7,7 +7,7 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>MySimpleCRM</name>
 	<url>sites.google.com/a/dce.ufpb.br/tct/inicio</url>
-	
+
 	<developers>
 		<developer>
 			<organization>UFPB - Universidade Federal da Paraíba</organization>
@@ -23,7 +23,7 @@
 			<timezone>-3</timezone>
 		</developer>
 	</developers>
-	
+
 	<contributors>
 		<contributor>
 			<organization>UFPB - Universidade Federal da Paraíba</organization>
@@ -58,7 +58,7 @@
 			<artifactId>junit</artifactId>
 			<version>4.8.2</version>
 			<scope>test</scope>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -83,11 +83,11 @@
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-json</artifactId>
 			<version>1.8</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>1.6.11</version>
+			<version>1.7.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.plugins</groupId>
@@ -100,6 +100,14 @@
 		<finalName>MySimpleCRM</finalName>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.5</version>
+					<configuration>
+						<parallel>methods</parallel>
+					</configuration>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
